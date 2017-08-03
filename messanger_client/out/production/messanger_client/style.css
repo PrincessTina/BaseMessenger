@@ -1,0 +1,41 @@
+.root {
+     -fx-background-image: url("4.jpg");
+}
+
+.label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-font-family: "Georgia", serif;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}
+
+#entrance {
+   -fx-font-size: 30px;
+   -fx-font-family: "Garamond", serif;
+   -fx-fill: white;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+#registration {
+   -fx-font-size: 28px;
+   -fx-font-family: "Garamond", serif;
+   -fx-fill: white;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+.button {
+    -fx-text-fill: white;
+    -fx-font-family: "Monotype Corsiva", serif;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#262626, #f2f2f2);
+    -fx-pref-width: 380px;
+    -fx-pref-height: 40px;
+    -fx-border-style: hidden hidden solid hidden; 
+    -fx-border-width: 4px;
+}
+
+.button:hover {
+ -fx-background-color: linear-gradient(#f2f2f2, #262626);
+ }
