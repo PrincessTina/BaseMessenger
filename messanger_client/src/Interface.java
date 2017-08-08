@@ -5,6 +5,7 @@ import javafx.scene.effect.*;
 import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.*;
 import javafx.stage.*;
 import javafx.scene.*;
@@ -12,16 +13,20 @@ import javafx.scene.layout.*;
 import javafx.geometry.*;
 
 import java.io.FileInputStream;
-import java.util.Objects;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 //ToDo: Попробовать переписать события для заголовков начального окна через css
 public class Interface extends Application {
   private boolean key;
+  private TreeSet<Label> contacts = new TreeSet<>(new LabelComparator());
+  static String userLogin;
+  private String currentContact;
+  private String lastSendingDate;
 
   public void start(Stage stage) throws Exception {
-    //loginWindow(stage);
-   // chatOnlineWindow(stage);
-    mainWindow(stage);
+    loginWindow(stage);
+    //mainWindow(stage);
   }
 
   private void loginWindow(Stage stage) throws Exception {
@@ -166,7 +171,7 @@ public class Interface extends Application {
     registrationText.setOnMouseMoved(event -> registrationText.setEffect(new Reflection()));
 
     registrationText.setOnMouseExited(event -> registrationText.setEffect(new InnerShadow(
-        BlurType.THREE_PASS_BOX, Color.color(0,0,0,0.7) , 6, 0.0 , 0 , 2)));
+        BlurType.THREE_PASS_BOX, Color.color(0, 0, 0, 0.7), 6, 0.0, 0, 2)));
 
     entranceText.setOnMouseClicked(event -> {
       if (key) {
@@ -182,17 +187,12 @@ public class Interface extends Application {
     entranceText.setOnMouseMoved(event -> entranceText.setEffect(new Reflection()));
 
     entranceText.setOnMouseExited(event -> entranceText.setEffect(new InnerShadow(
-        BlurType.THREE_PASS_BOX, Color.color(0,0,0,0.7) , 6, 0.0 , 0 , 2)));
+        BlurType.THREE_PASS_BOX, Color.color(0, 0, 0, 0.7), 6, 0.0, 0, 2)));
 
     button.setOnAction(event -> {
       int ticksCounter = 0;
       try {
         if (key) {
-          ORM.setSettings("PersonalData");
-          PersonalData data = new PersonalData();
-          data.login = login.getText();
-          data.password = password2.getText();
-
           removeExtraElement(password1List, loginList, password2List);
 
           if (password1.getText().length() > 0) {
@@ -209,7 +209,8 @@ public class Interface extends Application {
             password2List.add(cross2);
           }
 
-          if ((login.getText().length() > 0) && (!ORM.checkAccount("'" + login.getText() + "'"))) {
+          if ((login.getText().length() > 0) && (login.getText().length() < 100) &&
+              (!ORM.checkAccount("'" + login.getText() + "'"))) {
             loginList.add(tick);
             ticksCounter++;
           } else {
@@ -217,14 +218,16 @@ public class Interface extends Application {
           }
 
           if (ticksCounter == 3) {
-            ORM.add(data.toString());
-            chatsWindow(stage);
+            ORM.add(login.getText(), password1.getText());
+            userLogin = login.getText();
+            mainWindow(stage);
           }
         } else if (!ORM.checkAccount("'" + login.getText() + "'", "'" + password1.getText() + "'")) {
           removeExtraElement(password1List, loginList, password2List);
           loginList.add(cross);
           password1List.add(cross1);
         } else {
+          userLogin = login.getText();
           mainWindow(stage);
         }
       } catch (Exception ex) {
@@ -239,68 +242,72 @@ public class Interface extends Application {
     cross.setFitWidth(30);
     cross.setEffect(new Lighting());
 
-    Text contacts = new Text("Контакты");
+    Text text = new Text("Контакты");
     Text column = new Text();
     Text someText = new Text("Здесь должна быть ваша переписка");
-    Text fishText2 = new Text("Задача организации, в особенности же реализация намеченных плановых заданий требуют определения и уточнения существенных финансовых и административных условий. Равным образом новая модель организационной деятельности позволяет оценить значение новых предложений.\n" +
-        "\n" +
-        "С другой стороны укрепление и развитие структуры в значительной степени обуславливает создание систем массового участия. Повседневная практика показывает, что дальнейшее развитие различных форм деятельности обеспечивает широкому кругу (специалистов) участие в формировании дальнейших направлений развития. Идейные соображения высшего порядка, а также начало повседневной работы по формированию позиции в значительной степени обуславливает создание дальнейших направлений развития. Идейные соображения высшего порядка, а также новая модель организационной деятельности требуют от нас анализа систем массового участия. Идейные соображения высшего порядка, а также консультация с широким активом играет важную роль в формировании системы обучения кадров, соответствует насущным потребностям.\n" +
-        "\n" +
-        "Идейные соображения высшего порядка, а также укрепление и развитие структуры обеспечивает широкому кругу (специалистов) участие в формировании модели развития. Равным образом укрепление и развитие структуры представляет собой интересный эксперимент проверки форм развития. Не следует, однако забывать, что дальнейшее развитие различных форм деятельности в значительной степени обуславливает создание дальнейших направлений развития.\n" +
-        "\n" +
-        "Значимость этих проблем настолько очевидна, что сложившаяся структура организации представляет собой интересный эксперимент проверки модели развития. Не следует, однако забывать, что рамки и место обучения кадров требуют от нас анализа соответствующий условий активизации. С другой стороны новая модель организационной деятельности представляет собой интересный эксперимент проверки направлений прогрессивного развития.\n" +
-        "\n" +
-        "Значимость этих проблем настолько очевидна, что укрепление и развитие структуры требуют определения и уточнения дальнейших направлений развития. С другой стороны консультация с широким активом способствует подготовки и реализации систем массового участия.\n" +
-        "\n");
-    fishText2.setWrappingWidth(600);
 
     TextField searchLine = new TextField();
     searchLine.setPromptText("Поиск...");
     searchLine.setPrefHeight(15);
     searchLine.setFocusTraversable(false);
+    searchLine.setEditable(true);
+    searchLine.setId("blackBorder");
 
     TextField addField = new TextField();
     addField.setPrefSize(500, 15);
     addField.setPromptText("Добавить контакт...");
     addField.setFocusTraversable(false);
+    addField.setId("blackBorder");
 
-    TextArea messageArea = new TextArea();
-    messageArea.setPrefSize(600, 80);
-    messageArea.setWrapText(true);
-    messageArea.setPromptText("Напишите сообщение...");
-    messageArea.setFocusTraversable(false);
+    TextArea sendArea = new TextArea();
+    sendArea.setPrefSize(600, 80);
+    sendArea.setWrapText(true);
+    sendArea.setPromptText("Напишите сообщение...");
+    sendArea.setFocusTraversable(false);
+    sendArea.setId("blackBorder");
 
-    Button sendButton = new Button("Отправить");
-    sendButton.setFocusTraversable(false);
+    ImageView send = new ImageView(new Image(new FileInputStream("..\\6.png")));
+    send.setFitHeight(27);
+    send.setFitWidth(27);
 
     ImageView add = new ImageView(new Image(new FileInputStream("..\\6.png")));
-    add.setFitHeight(30);
-    add.setFitWidth(30);
+    add.setFitHeight(27);
+    add.setFitWidth(27);
 
-    VBox messageBox = new VBox(fishText2);
+    VBox messageBox = new VBox();
     ObservableList<Node> messageList = messageBox.getChildren();
-    messageBox.setPrefHeight(600);
 
     VBox contactsBox = new VBox();
-    ObservableList<Node> contactList = contactsBox.getChildren();
     contactsBox.setPrefSize(590, 600);
+    ObservableList<Node> contactList = contactsBox.getChildren();
+
+    //Достаем все имеющиеся контакты
+    contacts.addAll(ORM.readContacts(userLogin));
+
+    for (Label label: contacts) {
+      label.setStyle("-fx-border-style: hidden hidden solid hidden; -fx-border-color: #262626");
+      VBox.setMargin(label, new Insets(20, 20, 0, 20));
+      label.setPrefWidth(600);
+
+      label.setOnMouseClicked(subEvent -> setCurrentContact(label));
+    }
+
+    contactList.addAll(contacts);
 
     ScrollPane messageScroll = new ScrollPane();
     messageScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
     messageScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     messageScroll.setContent(messageBox);
+    messageScroll.setPrefHeight(600);
+    messageScroll.setId("blackBorder");
 
     ScrollPane contactsScroll = new ScrollPane();
     contactsScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     contactsScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     contactsScroll.setContent(contactsBox);
-    contactsScroll.setId("scroll");
+    contactsScroll.setId("blackBorder");
 
-    HBox rightScrollBox = new HBox(messageBox, messageScroll);
-
-    HBox leftScrollBox = new HBox(contactsScroll, contactsBox);
-
-    HBox sendBox = new HBox(messageArea, sendButton);
+    HBox sendBox = new HBox(sendArea, send);
     sendBox.setSpacing(20);
 
     HBox addBox = new HBox();
@@ -308,14 +315,14 @@ public class Interface extends Application {
     addList.addAll(addField, add);
     addBox.setSpacing(20);
 
-    VBox leftVBox = new VBox(contacts, searchLine, leftScrollBox, addBox);
+    VBox leftVBox = new VBox(text, searchLine, contactsScroll, addBox);
     leftVBox.setSpacing(20);
     leftVBox.setPadding(new Insets(20, 0, 20, 20));
 
     VBox centerBox = new VBox(column);
     centerBox.setPrefSize(80, 740);
 
-    VBox rightVBox = new VBox(someText, rightScrollBox, sendBox);
+    VBox rightVBox = new VBox(someText, messageScroll, sendBox);
     rightVBox.setSpacing(20);
     rightVBox.setPadding(new Insets(20, 20, 20, 0));
 
@@ -328,24 +335,77 @@ public class Interface extends Application {
     stage.setTitle("Вход");
     stage.show();
 
+    //Поток для ловли сообщений
+    Thread thread = new Thread(() -> {
+      ArrayList<String> arrayList = new ArrayList<>();
+      while (stage.isShowing()) {
+        try {
+          if (messageList.size() > 0) {
+            arrayList.addAll(ORM.checkMessages(currentContact));
+            Platform.runLater(() -> {
+              for (int i = 0; i < arrayList.size(); i += 2) {
+                addMessage(arrayList.get(i), arrayList.get(i + 1), messageList, false);
+              }
+            });
+            arrayList.clear();
+          }
+        } catch (Exception ex) {
+          System.out.println(ex.getMessage());
+        }
+      }
+    });
+    thread.start();
+
     //Events
+    send.setOnMousePressed(event -> {
+      try {
+        if ((sendArea.getText().length() > 0) && (!currentContact.isEmpty())) {
+          getLastDate();
+          ORM.add(currentContact, sendArea.getText(), lastSendingDate);
+          addMessage(sendArea.getText(), lastSendingDate, messageList, true);
+
+          sendArea.clear();
+        }
+      } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+      }
+    });
+
+    send.setOnMouseReleased(event -> messageScroll.setVvalue(1));
+
+    searchLine.setOnKeyReleased(event -> {
+      if (event.getCode().equals(KeyCode.ENTER)) {
+        double position = 1, i = 1;
+        for (Label label : contacts) {
+          if (label.getText().equals(searchLine.getText())) {
+            setCurrentContact(label);
+            position = i;
+          }
+          i++;
+        }
+        contactsScroll.setVvalue(position / contacts.size());
+      }
+    });
+
     add.setOnMouseClicked(event -> {
       try {
-        if (ORM.checkAccount("'" + addField.getText() + "'")) {
-          Label newContact = new Label();
-          newContact.setText(addField.getText());
+        if ((ORM.checkAccount("'" + addField.getText() + "'")) && (
+            !contacts.contains(new Label(addField.getText()))) && (!addField.getText().equals(userLogin))) {
+
+          Label newContact = new Label(addField.getText());
           newContact.setStyle("-fx-border-style: hidden hidden solid hidden; -fx-border-color: #262626");
+          VBox.setMargin(newContact, new Insets(20, 20, 0, 20));
           newContact.setPrefWidth(600);
 
-          newContact.setOnMouseClicked(subEvent -> {
-            Text text = new Text(newContact.getText());
-            messageList.add(text);
-          });
+          ORM.add(addField.getText());
+          contacts.add(newContact);
 
-          VBox.setMargin(newContact, new Insets(20, 20, 0, 20));
+          contactList.clear();
+          contactList.addAll(contacts);
 
-          contactList.add(newContact);
           addField.clear();
+
+          newContact.setOnMouseClicked(subEvent -> setCurrentContact(newContact));
         } else {
           addList.remove(add);
           addList.add(cross);
@@ -361,87 +421,57 @@ public class Interface extends Application {
     });
   }
 
+  private void addMessage(String messageText, String dateText, ObservableList<Node> messageList, boolean key) {
+    Label message = new Label(messageText);
+    double x, distance, length = message.getText().length();
+
+    if (length <= 45) {
+      x = length * 9.001;
+      distance = 600 - x;
+    } else {
+      x = 450;
+      distance = 150;
+    }
+
+    message.setPrefWidth(x);
+    message.setWrapText(true);
+    message.setTextAlignment(TextAlignment.JUSTIFY);
+    message.setStyle("-fx-border-color: #262626; -fx-border-style: solid");
+
+    Label date = new Label(dateText);
+    VBox.setMargin(date, new Insets(0, 0, 0, 480));
+
+    if (key) {
+      message.setAlignment(Pos.TOP_RIGHT);
+      date.setAlignment(Pos.TOP_RIGHT);
+      VBox.setMargin(message, new Insets(20, 0, 0, distance));
+    } else {
+      message.setAlignment(Pos.TOP_LEFT);
+      date.setAlignment(Pos.TOP_LEFT);
+      VBox.setMargin(message, new Insets(20, distance, 0, 0));
+    }
+    messageList.addAll(message, date);
+  }
+
+  private void setCurrentContact(Label thisLabel) {
+    currentContact = thisLabel.getText();
+
+    for (Label label: contacts) {
+      label.setTextFill(Paint.valueOf("black"));
+    }
+    thisLabel.setTextFill(Paint.valueOf("chartreuse"));
+  }
+
+  private void getLastDate() {
+    lastSendingDate = new SimpleDateFormat("HH:mm:ss dd/MM/yy").format(new Date());
+  }
+
   private void removeExtraElement(ObservableList... listing) {
     for (ObservableList list : listing) {
       if (list.size() == 2) {
         list.remove(1);
       }
     }
-  }
-
-  private void chatsWindow(Stage stage) {
-    try {
-      ImageView addChat = new ImageView(new Image(new FileInputStream("..\\plus3.png")));
-      addChat.setFitHeight(60);
-      addChat.setFitWidth(60);
-      addChat.setStyle("-fx-opacity: 0.9");
-
-      // List of created chats
-      Text text = new Text("Ку");
-      Text text2 = new Text("Ку");
-      Text text3 = new Text("Ку");
-      Text text4 = new Text("Ку");
-      Text text5 = new Text("Ку");
-      Text text6 = new Text("Ку");
-      Text text7 = new Text("Ку");
-      Text text8 = new Text("Ку");
-
-      VBox.setMargin(text, new Insets(20, 20, 10, 20));
-      VBox.setMargin(text2, new Insets(10, 20, 10, 20));
-      VBox.setMargin(text3, new Insets(10, 20, 10, 20));
-      VBox.setMargin(text4, new Insets(10, 10, 10, 20));
-      VBox.setMargin(text5, new Insets(10, 20, 10, 20));
-      VBox.setMargin(text6, new Insets(10, 20, 10, 20));
-      VBox.setMargin(text7, new Insets(10, 20, 10, 20));
-      VBox.setMargin(text8, new Insets(10, 20, 10, 20));
-
-      // Column for chats
-      VBox vBox = new VBox();
-      vBox.getChildren().addAll(text, text2, text3, text4, text5, text6, text7, text8);
-      vBox.setManaged(false);
-
-      // Table for chats and button of adding
-      BorderPane pane = new BorderPane();
-      BorderPane.setAlignment(vBox, Pos.TOP_LEFT);
-      BorderPane.setAlignment(addChat, Pos.BOTTOM_RIGHT);
-      pane.setLeft(vBox);
-      pane.setRight(addChat);
-
-      Scene scene = new Scene(pane, 440, 460);
-      stage.setScene(scene);
-      stage.show();
-
-      addChat.setOnMouseMoved(event -> addChat.setStyle("-fx-opacity: 1"));
-      addChat.setOnMouseExited(event -> addChat.setStyle("-fx-opacity: 0.9"));
-      addChat.setOnMouseClicked(event -> writeWhoWindow(new Stage(), vBox));
-
-    } catch (Exception ex) {
-      System.out.println(ex.getMessage());
-    }
-  }
-
-  private void writeWhoWindow(Stage stage, VBox vBox) {
-    Text text = new Text("С кем начать диалог ?");
-    TextField inputLogin = new TextField();
-    inputLogin.setPromptText("Введите логин");
-    Button ok = new Button("Oк");
-
-    VBox.setMargin(text, new Insets(20, 20, 10, 20));
-    VBox.setMargin(inputLogin, new Insets(10, 20, 10, 20));
-    VBox.setMargin(ok, new Insets(10, 20, 10, 20));
-
-    VBox root = new VBox();
-    root.getChildren().addAll(text, inputLogin, ok);
-
-    Scene scene = new Scene(root, 280, 160);
-    stage.setScene(scene);
-    stage.show();
-
-    ok.setOnAction(event -> {
-      Text text1 = new Text(inputLogin.getText());
-      VBox.setMargin(text1, new Insets(10, 20, 10, 20));
-      vBox.getChildren().add(text1);
-    });
   }
 
   static void createInterface() {

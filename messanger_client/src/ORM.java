@@ -1,290 +1,134 @@
-import com.google.gson.Gson;
 import com.sun.rowset.CachedRowSetImpl;
+import javafx.scene.control.Label;
 
 import javax.sql.rowset.CachedRowSet;
-import java.lang.reflect.Field;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.Statement;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 class ORM {
   static Connection connection;
-  static private Class currentClass;
-  static private Field[] fieldsOfCurrentClass;
+  static int id = 0;
 
-  static void setSettings(String stringClass) {
-    try {
-      currentClass = Class.forName(stringClass);
-      Object newObject = currentClass.newInstance();
-      fieldsOfCurrentClass = newObject.getClass().getDeclaredFields();
-    } catch (Exception ex) {
-      System.out.println(ex.getMessage());
-    }
-  }
-
-  /*static ArrayList<Object> read(String stringClass) throws Exception {
-      ArrayList<Object> objects = new ArrayList<>();
-
-      CachedRowSet resultSet = new CachedRowSetImpl();
-      Statement statement = connection.createStatement();
-      currentClass = Class.forName(stringClass);
-      Object newObject = currentClass.newInstance();
-      fieldsOfCurrentClass = newObject.getClass().getDeclaredFields();
-      String date;
-      Status status;
-      ArrayList<Integer> digit = new ArrayList<>();
-
-      createTable(stringClass);
-
-      resultSet.populate(statement.executeQuery("select * from " + currentClass.getSimpleName()));
-
-      while (resultSet.next()) {
-          newObject = currentClass.newInstance();
-          for (Field field : fieldsOfCurrentClass) {
-              field.setAccessible(true);
-
-              if (field.getType().getSimpleName().equals("ZonedDateTime")) {
-                  date = resultSet.getString(field.getName());
-
-                  for (String tokens : date.split("-")) {
-                      digit.add(Integer.parseInt(tokens));
-                  }
-                  field.set(newObject, ZonedDateTime.of(digit.get(0), digit.get(1), digit.get(2),
-                          digit.get(3), digit.get(4),
-                          digit.get(5), digit.get(6), ZoneId.of("Europe/Moscow")));
-
-                  digit.clear();
-              } else if (field.getType().getSimpleName().equals("Status")) {
-                  switch (resultSet.getString(field.getName())) {
-                      case "married":
-                          status = Status.married;
-                          break;
-                      case "idle":
-                          status = Status.idle;
-                          break;
-                      case "have_a_girlfriend":
-                          status = Status.have_a_girlfriend;
-                          break;
-                      case "single":
-                          status = Status.single;
-                          break;
-                      default:
-                          status = Status.all_is_complicated;
-                  }
-                  field.set(newObject, status);
-              } else if (field.getType().getSimpleName().equals("double")) {
-                  field.set(newObject, resultSet.getDouble(field.getName()));
-              } else {
-                  field.set(newObject, resultSet.getObject(field.getName()));
-              }
-          }
-          objects.add(newObject);
-      }
-      return objects;
-  }
-*/
-  static void remove(ArrayList<Integer> indexes) throws Exception {
-    String request1 = "delete from " + currentClass.getSimpleName() + " where id = ?;";
-    String request2 = "alter sequence " + currentClass.getSimpleName() + "_seq restart with 0;";
-    String request3 = "update " + currentClass.getSimpleName() + " set id = nextval('" +
-        currentClass.getSimpleName() + "_seq');";
-
-    CallableStatement statement = connection.prepareCall(request1);
-    connection.setAutoCommit(false);
-
-    for (int index : indexes) {
-      statement.setInt(1, index);
-      statement.execute();
-    }
-    connection.commit();
-    connection.setAutoCommit(true);
-
-    statement = connection.prepareCall(request2);
-    statement.execute();
-
-    statement = connection.prepareCall(request3);
-    statement.execute();
-  }
-
-  static void add(String newDataString) throws Exception {
-    ArrayList<Object> collection = parsingObject(newDataString);
-    Object newData = collection.get(0);
+  static void add(String... args) throws Exception {
+    fixConnection();
 
     StringBuilder request = new StringBuilder();
-    StringBuilder values = new StringBuilder();
+    switch (args.length) {
+      //Add Contact
+      case 1:
+        request.append("insert into contacts values((select id from users where login = '");
+        request.append(Interface.userLogin);
+        request.append("'), (select id from users where login = '");
+        request.append(args[0]);
+        request.append("'));");
+        break;
 
-    request.append("insert into ");
-    request.append(currentClass.getSimpleName());
-    request.append("(");
+      //Add user
+      case 2:
+        request.append("insert into users(login, password) values('");
+        request.append(args[0]);
+        request.append("', '");
+        request.append(args[1]);
+        request.append("');");
+        break;
 
-    for (Field field : fieldsOfCurrentClass) {
-      request.append(field.getName());
-      request.append(", ");
-
-      field.setAccessible(true);
-
-      if (field.getType() == String.class) {
-        values.append("'");
-        values.append(field.get(newData));
-        values.append("', ");
-      } else if (field.getType() == double.class) {
-        values.append(field.get(newData));
-        values.append("::decimal, ");
-      } else if (field.getType() == ZonedDateTime.class) {
-        values.append("'");
-        values.append(ZonedDateTime.parse(
-            field.get(newData).toString()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-0")));
-        values.append("', ");
-      } else {
-        values.append(field.get(newData));
-        values.append(", ");
-      }
+      //Add message
+      case 3:
+        request.append("insert into messages(id_who, id_whose, message, date) values((select id from users where login = '");
+        request.append(Interface.userLogin);
+        request.append("'), (select id from users where login = '");
+        request.append(args[0]);
+        request.append("'), '");
+        request.append(args[1]);
+        request.append("', '");
+        request.append(args[2]);
+        request.append("');");
     }
-    request.delete(request.length() - 2, request.length());
-    request.append(") values(");
-    request.append(values);
-    request.delete(request.length() - 2, request.length());
-    request.append(");");
 
     connection.prepareStatement(request.toString()).execute();
   }
 
+  static TreeSet<Label> readContacts(String myLogin) throws Exception {
+    fixConnection();
+
+    TreeSet<Label> searchedSet = new TreeSet<>(new LabelComparator());
+    CachedRowSet resultSet = new CachedRowSetImpl();
+
+    resultSet.populate(connection.createStatement().executeQuery("select login from contacts inner join users " +
+        "on(id_whose = id) where id_who = (select id from users where login = '" + myLogin + "');"));
+
+    while (resultSet.next()) {
+      searchedSet.add(new Label(resultSet.getString(1)));
+    }
+    return searchedSet;
+  }
+
+  static ArrayList<String> checkMessages(String currentContact) throws Exception {
+    fixConnection();
+
+    ArrayList<String> searchedList = new ArrayList<>();
+    StringBuilder request = new StringBuilder();
+    CachedRowSet resultSet = new CachedRowSetImpl();
+    Statement statement = connection.createStatement();
+
+    request.append("select * from messages where id_who = (select id from users where login = '");
+    request.append(currentContact);
+    request.append("') and id_whose = (select id from users where login = '");
+    request.append(Interface.userLogin);
+    request.append("') and id > ");
+    if (id != 0) {
+      request.append(id);
+    } else {
+      request.append("(select id from messages where id_who = (select id from users where login = '");
+      request.append(Interface.userLogin);
+      request.append("') and id_whose = (select id from users where login = '");
+      request.append(currentContact);
+      request.append("') order by id desc limit 1)");
+    }
+    request.append(";");
+    resultSet.populate(statement.executeQuery(request.toString()));
+
+    while (resultSet.next()) {
+      searchedList.add(resultSet.getString(4));
+      searchedList.add(resultSet.getString(5));
+      id = resultSet.getInt(1);
+    }
+    return searchedList;
+  }
+
   static boolean checkAccount(String... args) throws Exception {
-    boolean answer = false;
+    fixConnection();
+
+    boolean answer;
     StringBuilder builder = new StringBuilder();
-    builder.append("select 1 from personalData where login = ");
+    CachedRowSet resultSet = new CachedRowSetImpl();
+    Statement statement = connection.createStatement();
+
+    builder.append("select 1 from users where login = ");
     builder.append(args[0]);
 
     if (args.length > 1) {
-      builder.append("and password = ");
+      builder.append(" and password = ");
       builder.append(args[1]);
     }
-
     builder.append(";");
 
-    CachedRowSet resultSet = new CachedRowSetImpl();
-    Statement statement = connection.createStatement();
     resultSet.populate(statement.executeQuery(builder.toString()));
 
-    while (resultSet.next()) {
-      switch (resultSet.getString(1)) {
-        case "1": answer = true;
-                  break;
-        default: answer = false;
-      }
+    switch (resultSet.size()) {
+      case 1:
+        answer = true;
+        break;
+      default:
+        answer = false;
     }
     return answer;
   }
 
-    /* static void modify(String stringForNewCollection, ArrayList<Integer> indexes) throws Exception {
-        ArrayList<Object> collection = parsingObject(stringForNewCollection);
-        Object newShorty = collection.get(0);
-        StringBuilder request = new StringBuilder();
-        int index = indexes.get(0);
-
-        request.append("update ");
-        request.append(currentClass.getSimpleName());
-        request.append(" set ");
-
-        for (Field field : fieldsOfCurrentClass) {
-            if (!field.getName().matches("id")) {
-                request.append(field.getName());
-                request.append(" = ");
-
-                field.setAccessible(true);
-
-                if ((field.getType() == String.class) || (field.getType() == Status.class)) {
-                    request.append("'");
-                    request.append(field.get(newShorty));
-                    request.append("', ");
-                } else if (field.getType() == double.class) {
-                    request.append(field.get(newShorty));
-                    request.append("::decimal, ");
-                } else if (field.getType() == ZonedDateTime.class) {
-                    request.append("'");
-                    request.append(ZonedDateTime.parse(
-                            field.get(newShorty).toString()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-0")));
-                    request.append("', ");
-                } else {
-                    request.append(field.get(newShorty));
-                    request.append(", ");
-                }
-            }
-        }
-        request.delete(request.length() - 2, request.length());
-        request.append(" where id = ");
-        request.append(index);
-        request.append(";");
-
-        connection.prepareStatement(request.toString()).execute();
-    } */
-
-  private static void createTable(String stringClass) throws Exception {
-    StringBuilder request = new StringBuilder();
-    currentClass = Class.forName(stringClass);
-
-    request.append("create table if not exists ");
-    request.append(currentClass.getSimpleName());
-    request.append("(");
-    request.append(System.lineSeparator());
-    request.append(buildFields());
-    request.append(");");
-
-    connection.prepareCall(request.toString()).execute();
-  }
-
-  private static String buildFields() {
-    StringBuilder request = new StringBuilder();
-
-    for (Field field : fieldsOfCurrentClass) {
-      request.append(field.getName());
-      request.append(" ");
-      request.append(convertType(field.getType().getSimpleName()));
-      request.append(", ");
+  private static void fixConnection() throws Exception {
+    if (connection.isClosed()) {
+      connection = DataBaseController.connection();
     }
-    request.delete(request.length() - 2, request.length() - 1);
-    return request.toString();
-  }
-
-  private static String convertType(String type) {
-    switch (type) {
-      case "double":
-        return "decimal";
-      case "int":
-        return "int";
-      default:
-        return "text";
-    }
-  }
-
-  private static ArrayList<Object> parsingObject(String string) throws Exception {
-    ArrayList<Object> searchedCollection = new ArrayList<>();
-    Gson gson = new Gson();
-    String arrayOfObjects = string.substring(0, string.length()), date;
-    Object newObject;
-    boolean state = false;
-
-    for (String tokens : arrayOfObjects.split("%")) {
-      for (Field field : fieldsOfCurrentClass) {
-        if (field.getType().getSimpleName().equals("ZonedDateTime")) {
-          date = tokens.substring(tokens.indexOf("date") - 2, tokens.length() - 2).substring(9);
-          tokens = tokens.substring(0, tokens.indexOf("date") - 2) + "}";
-          newObject = gson.fromJson(tokens, currentClass);
-          field.set(newObject, ZonedDateTime.parse(date));
-
-          searchedCollection.add(newObject);
-          state = true;
-        }
-      }
-      if (!state) {
-        searchedCollection.add(gson.fromJson(tokens, currentClass));
-      }
-      state = false;
-    }
-    return searchedCollection;
   }
 }

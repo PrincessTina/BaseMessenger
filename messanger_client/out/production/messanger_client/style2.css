@@ -1,5 +1,4 @@
-#scroll:focused {
-    -fx-border-color: white;
-    -fx-border-width: 1px;
-    -fx-border-style: solid;
+#blackBorder {
+-fx-border-color: #000000;
+-fx-border-width: 1px;
 }
