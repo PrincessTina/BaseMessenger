@@ -8,7 +8,7 @@ import java.util.TreeSet;
 
 class ORM {
   static Connection connection;
-  static int id = 0;
+  private static int id = 0;
 
   static void add(String... args) throws Exception {
     fixConnection();
@@ -47,6 +47,32 @@ class ORM {
     }
 
     connection.prepareStatement(request.toString()).execute();
+  }
+
+  static ArrayList<Row> readMessages(String currentContact) throws Exception {
+    fixConnection();
+
+    ArrayList<Row> searchedList = new ArrayList<>();
+    StringBuilder request = new StringBuilder();
+    CachedRowSet resultSet = new CachedRowSetImpl();
+    Statement statement = connection.createStatement();
+
+    request.append("select login, message, date from messages inner join users on(id_who = users.id) where login in('");
+    request.append(Interface.userLogin);
+    request.append("', '");
+    request.append(currentContact);
+    request.append("') and id_whose in(select id from users where login in('");
+    request.append(Interface.userLogin);
+    request.append("', '");
+    request.append(currentContact);
+    request.append("'));");
+
+    resultSet.populate(statement.executeQuery(request.toString()));
+    while (resultSet.next()) {
+      searchedList.add(new Row(resultSet.getString(1), resultSet.getString(2),
+          resultSet.getString(3)));
+    }
+    return searchedList;
   }
 
   static TreeSet<Label> readContacts(String myLogin) throws Exception {

@@ -4,6 +4,8 @@ import javafx.scene.control.*;
 import javafx.scene.effect.*;
 import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.*;
@@ -19,10 +21,11 @@ import java.util.*;
 //ToDo: Попробовать переписать события для заголовков начального окна через css
 public class Interface extends Application {
   private boolean key;
-  private TreeSet<Label> contacts = new TreeSet<>(new LabelComparator());
   static String userLogin;
   private String currentContact;
   private String lastSendingDate;
+  private TreeSet<Label> contacts = new TreeSet<>(new LabelComparator());
+  private HashMap<String, ArrayList<Row>> conversation = new HashMap<>();
 
   public void start(Stage stage) throws Exception {
     loginWindow(stage);
@@ -209,7 +212,7 @@ public class Interface extends Application {
             password2List.add(cross2);
           }
 
-          if ((login.getText().length() > 0) && (login.getText().length() < 100) &&
+          if ((login.getText().length() > 0) && (login.getText().length() < 35) &&
               (!ORM.checkAccount("'" + login.getText() + "'"))) {
             loginList.add(tick);
             ticksCounter++;
@@ -242,6 +245,11 @@ public class Interface extends Application {
     cross.setFitWidth(30);
     cross.setEffect(new Lighting());
 
+    ImageView tick = new ImageView(new Image(new FileInputStream("..\\8240774.png")));
+    tick.setFitHeight(30);
+    tick.setFitWidth(30);
+    tick.setEffect(new Lighting());
+
     Text text = new Text("Контакты");
     Text column = new Text();
     Text someText = new Text("Здесь должна быть ваша переписка");
@@ -254,7 +262,7 @@ public class Interface extends Application {
     searchLine.setId("blackBorder");
 
     TextField addField = new TextField();
-    addField.setPrefSize(500, 15);
+    addField.setPrefSize(300, 15);
     addField.setPromptText("Добавить контакт...");
     addField.setFocusTraversable(false);
     addField.setId("blackBorder");
@@ -270,29 +278,8 @@ public class Interface extends Application {
     send.setFitHeight(27);
     send.setFitWidth(27);
 
-    ImageView add = new ImageView(new Image(new FileInputStream("..\\6.png")));
-    add.setFitHeight(27);
-    add.setFitWidth(27);
-
     VBox messageBox = new VBox();
     ObservableList<Node> messageList = messageBox.getChildren();
-
-    VBox contactsBox = new VBox();
-    contactsBox.setPrefSize(590, 600);
-    ObservableList<Node> contactList = contactsBox.getChildren();
-
-    //Достаем все имеющиеся контакты
-    contacts.addAll(ORM.readContacts(userLogin));
-
-    for (Label label: contacts) {
-      label.setStyle("-fx-border-style: hidden hidden solid hidden; -fx-border-color: #262626");
-      VBox.setMargin(label, new Insets(20, 20, 0, 20));
-      label.setPrefWidth(600);
-
-      label.setOnMouseClicked(subEvent -> setCurrentContact(label));
-    }
-
-    contactList.addAll(contacts);
 
     ScrollPane messageScroll = new ScrollPane();
     messageScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
@@ -301,18 +288,34 @@ public class Interface extends Application {
     messageScroll.setPrefHeight(600);
     messageScroll.setId("blackBorder");
 
+    VBox contactsBox = new VBox();
+    ObservableList<Node> contactList = contactsBox.getChildren();
+
+    //Достаем все имеющиеся контакты
+    contacts.addAll(ORM.readContacts(userLogin));
+
+    for (Label label : contacts) {
+      label.setStyle("-fx-border-style: hidden hidden solid hidden; -fx-border-color: #262626");
+      VBox.setMargin(label, new Insets(20, 20, 0, 20));
+      label.setPrefWidth(300);
+
+      label.setOnMouseClicked(subEvent -> setCurrentContact(label, messageList, messageScroll));
+    }
+
+    contactList.addAll(contacts);
+
     ScrollPane contactsScroll = new ScrollPane();
     contactsScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     contactsScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     contactsScroll.setContent(contactsBox);
     contactsScroll.setId("blackBorder");
+    contactsScroll.setPrefSize(350, 600);
 
     HBox sendBox = new HBox(sendArea, send);
     sendBox.setSpacing(20);
 
-    HBox addBox = new HBox();
+    HBox addBox = new HBox(addField);
     ObservableList<Node> addList = addBox.getChildren();
-    addList.addAll(addField, add);
     addBox.setSpacing(20);
 
     VBox leftVBox = new VBox(text, searchLine, contactsScroll, addBox);
@@ -321,55 +324,47 @@ public class Interface extends Application {
 
     VBox centerBox = new VBox(column);
     centerBox.setPrefSize(80, 740);
+    //centerBox.setStyle("-fx-background-color: #760d4f");
+    centerBox.setStyle("-fx-background-color: linear-gradient(#000000, #96127e, #000000)");
 
     VBox rightVBox = new VBox(someText, messageScroll, sendBox);
     rightVBox.setSpacing(20);
     rightVBox.setPadding(new Insets(20, 20, 20, 0));
 
     HBox mainBox = new HBox(leftVBox, centerBox, rightVBox);
-    mainBox.setSpacing(20);
+    mainBox.setSpacing(5);
 
-    Scene scene = new Scene(mainBox, 1480, 740);
+    Scene scene = new Scene(mainBox, 1130, 740);
     scene.getStylesheets().add(Main.class.getResource("style2.css").toExternalForm());
     stage.setScene(scene);
     stage.setTitle("Вход");
     stage.show();
 
     //Поток для ловли сообщений
-    Thread thread = new Thread(() -> {
+    Thread thread1 = new Thread(() -> {
       ArrayList<String> arrayList = new ArrayList<>();
       while (stage.isShowing()) {
         try {
           if (messageList.size() > 0) {
             arrayList.addAll(ORM.checkMessages(currentContact));
-            Platform.runLater(() -> {
-              for (int i = 0; i < arrayList.size(); i += 2) {
-                addMessage(arrayList.get(i), arrayList.get(i + 1), messageList, false);
-              }
-            });
-            arrayList.clear();
+            if (arrayList.size() > 0) {
+              Platform.runLater(() -> {
+                for (int i = 0; i < addList.size(); i += 2) {
+                  addMessage(arrayList.get(i), arrayList.get(i + 1), messageList, false);
+                }
+                arrayList.clear();
+              });
+            }
           }
         } catch (Exception ex) {
           System.out.println(ex.getMessage());
         }
       }
     });
-    thread.start();
+    thread1.start();
 
     //Events
-    send.setOnMousePressed(event -> {
-      try {
-        if ((sendArea.getText().length() > 0) && (!currentContact.isEmpty())) {
-          getLastDate();
-          ORM.add(currentContact, sendArea.getText(), lastSendingDate);
-          addMessage(sendArea.getText(), lastSendingDate, messageList, true);
-
-          sendArea.clear();
-        }
-      } catch (Exception ex) {
-        System.out.println(ex.getMessage());
-      }
-    });
+    send.setOnMousePressed(event -> sendMessage(sendArea, messageList));
 
     send.setOnMouseReleased(event -> messageScroll.setVvalue(1));
 
@@ -378,7 +373,7 @@ public class Interface extends Application {
         double position = 1, i = 1;
         for (Label label : contacts) {
           if (label.getText().equals(searchLine.getText())) {
-            setCurrentContact(label);
+            setCurrentContact(label, messageList, messageScroll);
             position = i;
           }
           i++;
@@ -387,38 +382,49 @@ public class Interface extends Application {
       }
     });
 
-    add.setOnMouseClicked(event -> {
+    addField.setOnKeyPressed(event -> {
       try {
-        if ((ORM.checkAccount("'" + addField.getText() + "'")) && (
-            !contacts.contains(new Label(addField.getText()))) && (!addField.getText().equals(userLogin))) {
+        removeExtraElement(addList);
+        if (event.getCode().equals(KeyCode.ENTER)) {
+          if ((ORM.checkAccount("'" + addField.getText() + "'")) && (
+              !contacts.contains(new Label(addField.getText()))) && (!addField.getText().equals(userLogin))) {
 
-          Label newContact = new Label(addField.getText());
-          newContact.setStyle("-fx-border-style: hidden hidden solid hidden; -fx-border-color: #262626");
-          VBox.setMargin(newContact, new Insets(20, 20, 0, 20));
-          newContact.setPrefWidth(600);
+            Label newContact = new Label(addField.getText());
+            newContact.setStyle("-fx-border-style: hidden hidden solid hidden; -fx-border-color: #262626");
+            VBox.setMargin(newContact, new Insets(20, 20, 0, 20));
+            newContact.setPrefWidth(300);
 
-          ORM.add(addField.getText());
-          contacts.add(newContact);
+            ORM.add(addField.getText());
+            contacts.add(newContact);
 
-          contactList.clear();
-          contactList.addAll(contacts);
+            contactList.clear();
+            contactList.addAll(contacts);
 
-          addField.clear();
+            addField.clear();
+            addList.add(tick);
 
-          newContact.setOnMouseClicked(subEvent -> setCurrentContact(newContact));
-        } else {
-          addList.remove(add);
-          addList.add(cross);
+            newContact.setOnMouseClicked(subEvent -> setCurrentContact(newContact, messageList, messageScroll));
+          } else {
+            addList.add(cross);
+          }
         }
       } catch (Exception ex) {
         System.out.println(ex.getMessage());
       }
     });
+  }
 
-    addField.setOnKeyPressed(event -> {
-      addList.remove(1);
-      addList.add(add);
-    });
+  private void sendMessage(TextArea sendArea, ObservableList<Node> messageList) {
+    try {
+      if ((sendArea.getText().length() > 0) && (!currentContact.isEmpty())) {
+        getLastDate();
+        ORM.add(currentContact, sendArea.getText(), lastSendingDate);
+        addMessage(sendArea.getText(), lastSendingDate, messageList, true);
+        sendArea.clear();
+      }
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
+    }
   }
 
   private void addMessage(String messageText, String dateText, ObservableList<Node> messageList, boolean key) {
@@ -439,27 +445,51 @@ public class Interface extends Application {
     message.setStyle("-fx-border-color: #262626; -fx-border-style: solid");
 
     Label date = new Label(dateText);
-    VBox.setMargin(date, new Insets(0, 0, 0, 480));
 
     if (key) {
       message.setAlignment(Pos.TOP_RIGHT);
       date.setAlignment(Pos.TOP_RIGHT);
       VBox.setMargin(message, new Insets(20, 0, 0, distance));
+      VBox.setMargin(date, new Insets(0, 0, 0, 480));
     } else {
       message.setAlignment(Pos.TOP_LEFT);
       date.setAlignment(Pos.TOP_LEFT);
-      VBox.setMargin(message, new Insets(20, distance, 0, 0));
+      VBox.setMargin(message, new Insets(20, distance, 0, 10));
+      VBox.setMargin(date, new Insets(0, 470, 0, 10));
     }
     messageList.addAll(message, date);
   }
 
-  private void setCurrentContact(Label thisLabel) {
-    currentContact = thisLabel.getText();
+  private void setCurrentContact(Label thisLabel, ObservableList<Node> messageList, ScrollPane messageScroll) {
+    try {
+      currentContact = thisLabel.getText();
+      messageList.clear();
+      ArrayList<Row> rowArrayList = new ArrayList<>();
 
-    for (Label label: contacts) {
-      label.setTextFill(Paint.valueOf("black"));
+      if (conversation.containsKey(thisLabel.getText())) {
+        rowArrayList.addAll(conversation.get(thisLabel.getText()));
+      } else {
+        rowArrayList.addAll(ORM.readMessages(currentContact));
+        conversation.put(thisLabel.getText(), rowArrayList);
+      }
+
+      for (Row row : rowArrayList) {
+        if (row.getLogin_who().equals(userLogin)) {
+          addMessage(row.getMessage(), row.getDate(), messageList, true);
+        } else {
+          addMessage(row.getMessage(), row.getDate(), messageList, false);
+        }
+      }
+
+      Platform.runLater(() -> messageScroll.setVvalue(1));
+
+      for (Label label : contacts) {
+        label.setTextFill(Paint.valueOf("black"));
+      }
+      thisLabel.setTextFill(Paint.valueOf("chartreuse"));
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
     }
-    thisLabel.setTextFill(Paint.valueOf("chartreuse"));
   }
 
   private void getLastDate() {

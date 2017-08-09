@@ -1,3 +1,7 @@
+.root {
+-fx-background-color: #000000;
+}
+
 #blackBorder {
 -fx-border-color: #000000;
 -fx-border-width: 1px;
