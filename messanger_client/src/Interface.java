@@ -4,10 +4,7 @@ import javafx.scene.control.*;
 import javafx.scene.effect.*;
 import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.*;
 import javafx.stage.*;
 import javafx.scene.*;
@@ -19,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 //ToDo: Попробовать переписать события для заголовков начального окна через css
+//ToDO: Неадекватный баг с сообщениями
 public class Interface extends Application {
   private boolean key;
   static String userLogin;
@@ -251,21 +249,23 @@ public class Interface extends Application {
     tick.setEffect(new Lighting());
 
     Text text = new Text("Контакты");
+    text.setId("label");
     Text column = new Text();
     Text someText = new Text("Здесь должна быть ваша переписка");
+    someText.setId("label");
 
     TextField searchLine = new TextField();
     searchLine.setPromptText("Поиск...");
     searchLine.setPrefHeight(15);
     searchLine.setFocusTraversable(false);
     searchLine.setEditable(true);
-    searchLine.setId("blackBorder");
+    searchLine.setId("line");
 
     TextField addField = new TextField();
     addField.setPrefSize(300, 15);
     addField.setPromptText("Добавить контакт...");
     addField.setFocusTraversable(false);
-    addField.setId("blackBorder");
+    addField.setId("line");
 
     TextArea sendArea = new TextArea();
     sendArea.setPrefSize(600, 80);
@@ -295,11 +295,18 @@ public class Interface extends Application {
     contacts.addAll(ORM.readContacts(userLogin));
 
     for (Label label : contacts) {
-      label.setStyle("-fx-border-style: hidden hidden solid hidden; -fx-border-color: #262626");
       VBox.setMargin(label, new Insets(20, 20, 0, 20));
       label.setPrefWidth(300);
+      label.setId("contact");
+
+      ArrayList<Row> rowArrayList = new ArrayList<>();
+      rowArrayList.addAll(ORM.readMessages(label.getText()));
+      conversation.put(label.getText(), rowArrayList);
+
 
       label.setOnMouseClicked(subEvent -> setCurrentContact(label, messageList, messageScroll));
+      label.setOnMouseExited(subEvent -> contactOnMouseExited(label, false));
+      label.setOnMouseEntered(subEvent -> contactOnMouseEntered(label));
     }
 
     contactList.addAll(contacts);
@@ -323,9 +330,9 @@ public class Interface extends Application {
     leftVBox.setPadding(new Insets(20, 0, 20, 20));
 
     VBox centerBox = new VBox(column);
-    centerBox.setPrefSize(80, 740);
-    //centerBox.setStyle("-fx-background-color: #760d4f");
-    centerBox.setStyle("-fx-background-color: linear-gradient(#000000, #96127e, #000000)");
+    centerBox.setPrefWidth(80);
+    centerBox.setPadding(new Insets(20, 0, 20, 0));
+    centerBox.setStyle("-fx-background-color: linear-gradient(#303030, #303030, #68b800, #a2f51d, #68b800, #303030, #303030)");
 
     VBox rightVBox = new VBox(someText, messageScroll, sendBox);
     rightVBox.setSpacing(20);
@@ -341,7 +348,7 @@ public class Interface extends Application {
     stage.show();
 
     //Поток для ловли сообщений
-    Thread thread1 = new Thread(() -> {
+    Thread thread = new Thread(() -> {
       ArrayList<String> arrayList = new ArrayList<>();
       while (stage.isShowing()) {
         try {
@@ -361,7 +368,7 @@ public class Interface extends Application {
         }
       }
     });
-    thread1.start();
+    thread.start();
 
     //Events
     send.setOnMousePressed(event -> sendMessage(sendArea, messageList));
@@ -370,15 +377,15 @@ public class Interface extends Application {
 
     searchLine.setOnKeyReleased(event -> {
       if (event.getCode().equals(KeyCode.ENTER)) {
-        double position = 1, i = 1;
+        double position, i = 1;
         for (Label label : contacts) {
           if (label.getText().equals(searchLine.getText())) {
             setCurrentContact(label, messageList, messageScroll);
             position = i;
+            contactsScroll.setVvalue(position / contacts.size());
           }
           i++;
         }
-        contactsScroll.setVvalue(position / contacts.size());
       }
     });
 
@@ -390,7 +397,7 @@ public class Interface extends Application {
               !contacts.contains(new Label(addField.getText()))) && (!addField.getText().equals(userLogin))) {
 
             Label newContact = new Label(addField.getText());
-            newContact.setStyle("-fx-border-style: hidden hidden solid hidden; -fx-border-color: #262626");
+            newContact.setId("contact");
             VBox.setMargin(newContact, new Insets(20, 20, 0, 20));
             newContact.setPrefWidth(300);
 
@@ -403,7 +410,11 @@ public class Interface extends Application {
             addField.clear();
             addList.add(tick);
 
+            setCurrentContact(newContact, messageList, messageScroll);
+
             newContact.setOnMouseClicked(subEvent -> setCurrentContact(newContact, messageList, messageScroll));
+            newContact.setOnMouseExited(subEvent -> contactOnMouseExited(newContact, false));
+            newContact.setOnMouseEntered(subEvent -> contactOnMouseEntered(newContact));
           } else {
             addList.add(cross);
           }
@@ -429,10 +440,11 @@ public class Interface extends Application {
 
   private void addMessage(String messageText, String dateText, ObservableList<Node> messageList, boolean key) {
     Label message = new Label(messageText);
+    message.setAccessibleText(messageText);
     double x, distance, length = message.getText().length();
 
     if (length <= 45) {
-      x = length * 9.001;
+      x = length * 11;
       distance = 600 - x;
     } else {
       x = 450;
@@ -441,36 +453,62 @@ public class Interface extends Application {
 
     message.setPrefWidth(x);
     message.setWrapText(true);
-    message.setTextAlignment(TextAlignment.JUSTIFY);
-    message.setStyle("-fx-border-color: #262626; -fx-border-style: solid");
 
     Label date = new Label(dateText);
+    date.setAccessibleText(dateText);
 
     if (key) {
-      message.setAlignment(Pos.TOP_RIGHT);
+      message.setAlignment(Pos.TOP_CENTER);
       date.setAlignment(Pos.TOP_RIGHT);
       VBox.setMargin(message, new Insets(20, 0, 0, distance));
       VBox.setMargin(date, new Insets(0, 0, 0, 480));
+      message.setStyle("-fx-font-size: 16px; -fx-background-color: #A2F51D;" +
+          " -fx-background-radius:  0px 20px 20px 10px;");
     } else {
-      message.setAlignment(Pos.TOP_LEFT);
+      message.setAlignment(Pos.TOP_CENTER);
       date.setAlignment(Pos.TOP_LEFT);
       VBox.setMargin(message, new Insets(20, distance, 0, 10));
       VBox.setMargin(date, new Insets(0, 470, 0, 10));
+      message.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-background-color: #303030;" +
+          " -fx-background-radius:  0px 20px 20px 20px;");
     }
+    conversation.get(currentContact).add(new Row(currentContact, messageText, dateText));
     messageList.addAll(message, date);
+  }
+
+  private void contactOnMouseExited(Label thisLabel, boolean key) {
+    if ((!thisLabel.getText().equals(currentContact)) || key) {
+      thisLabel.setStyle("-fx-font-size: 20px; -fx-border-style: hidden hidden solid hidden;" +
+          "-fx-border-color: #262626; -fx-font-family: \"Monotype Corsiva\", serif; -fx-text-fill: black");
+    }
+  }
+
+  private void contactOnMouseEntered(Label thisLabel) {
+    if (!thisLabel.getText().equals(currentContact)) {
+      thisLabel.setStyle("-fx-font-size: 20px; -fx-border-style: hidden hidden solid hidden;" +
+          "-fx-border-color: #cb45b1; -fx-font-family: \"Monotype Corsiva\", serif; -fx-text-fill: #96127d");
+    }
   }
 
   private void setCurrentContact(Label thisLabel, ObservableList<Node> messageList, ScrollPane messageScroll) {
     try {
+      for (Label label : contacts) {
+        if (label.getText().equals(currentContact)) {
+          contactOnMouseExited(label, true);
+        }
+      }
       currentContact = thisLabel.getText();
+      thisLabel.setStyle("-fx-font-size: 20px; -fx-border-style: hidden hidden solid hidden;" +
+          "-fx-text-fill: green; -fx-border-color: #A2F51D; -fx-font-family: \"Monotype Corsiva\", fantasy;");
+
       messageList.clear();
       ArrayList<Row> rowArrayList = new ArrayList<>();
 
-      if (conversation.containsKey(thisLabel.getText())) {
-        rowArrayList.addAll(conversation.get(thisLabel.getText()));
+      if (conversation.containsKey(currentContact)) {
+        rowArrayList.addAll(conversation.get(currentContact));
       } else {
         rowArrayList.addAll(ORM.readMessages(currentContact));
-        conversation.put(thisLabel.getText(), rowArrayList);
+        conversation.put(currentContact, rowArrayList);
       }
 
       for (Row row : rowArrayList) {
@@ -482,11 +520,6 @@ public class Interface extends Application {
       }
 
       Platform.runLater(() -> messageScroll.setVvalue(1));
-
-      for (Label label : contacts) {
-        label.setTextFill(Paint.valueOf("black"));
-      }
-      thisLabel.setTextFill(Paint.valueOf("chartreuse"));
     } catch (Exception ex) {
       System.out.println(ex.getMessage());
     }
