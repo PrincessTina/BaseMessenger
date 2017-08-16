@@ -4,11 +4,11 @@ import javafx.scene.control.Label;
 import javax.sql.rowset.CachedRowSet;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.TreeSet;
 
 class ORM {
   static Connection connection;
-  private static int id = 0;
 
   static void add(String... args) throws Exception {
     fixConnection();
@@ -57,7 +57,7 @@ class ORM {
     CachedRowSet resultSet = new CachedRowSetImpl();
     Statement statement = connection.createStatement();
 
-    request.append("select login, message, date from messages inner join users on(id_who = users.id) where login in('");
+    request.append("select messages.id, login, message, date from messages inner join users on(id_who = users.id) where login in('");
     request.append(Interface.userLogin);
     request.append("', '");
     request.append(currentContact);
@@ -69,10 +69,31 @@ class ORM {
 
     resultSet.populate(statement.executeQuery(request.toString()));
     while (resultSet.next()) {
-      searchedList.add(new Row(resultSet.getString(1), resultSet.getString(2),
-          resultSet.getString(3)));
+      searchedList.add(new Row(resultSet.getInt(1), resultSet.getString(2),
+          resultSet.getString(3), resultSet.getString(4)));
     }
     return searchedList;
+  }
+
+  static int getLastId(String login_who, String login_whose) throws Exception {
+    fixConnection();
+
+    int id = 0;
+    StringBuilder request = new StringBuilder();
+    CachedRowSet resultSet = new CachedRowSetImpl();
+    Statement statement = connection.createStatement();
+
+    request.append("select id from messages where id_who = (select id from users where login = '");
+    request.append(login_who);
+    request.append("') and id_whose = (select id from users where login = '");
+    request.append(login_whose);
+    request.append("') order by id desc limit 1;");
+
+    resultSet.populate(statement.executeQuery(request.toString()));
+    while (resultSet.next()) {
+      id = resultSet.getInt(1);
+    }
+    return id;
   }
 
   static TreeSet<Label> readContacts(String myLogin) throws Exception {
@@ -90,10 +111,10 @@ class ORM {
     return searchedSet;
   }
 
-  static ArrayList<String> checkMessages(String currentContact) throws Exception {
+  static ArrayList<Row> checkMessages(String currentContact, int id) throws Exception {
     fixConnection();
 
-    ArrayList<String> searchedList = new ArrayList<>();
+    ArrayList<Row> rowArrayList = new ArrayList<>();
     StringBuilder request = new StringBuilder();
     CachedRowSet resultSet = new CachedRowSetImpl();
     Statement statement = connection.createStatement();
@@ -103,24 +124,14 @@ class ORM {
     request.append("') and id_whose = (select id from users where login = '");
     request.append(Interface.userLogin);
     request.append("') and id > ");
-    if (id != 0) {
-      request.append(id);
-    } else {
-      request.append("(select id from messages where id_who = (select id from users where login = '");
-      request.append(Interface.userLogin);
-      request.append("') and id_whose = (select id from users where login = '");
-      request.append(currentContact);
-      request.append("') order by id desc limit 1)");
-    }
+    request.append(id);
     request.append(";");
     resultSet.populate(statement.executeQuery(request.toString()));
 
     while (resultSet.next()) {
-      searchedList.add(resultSet.getString(4));
-      searchedList.add(resultSet.getString(5));
-      id = resultSet.getInt(1);
+      rowArrayList.add(new Row(resultSet.getInt(1), currentContact, resultSet.getString(4), resultSet.getString(5)));
     }
-    return searchedList;
+    return rowArrayList;
   }
 
   static boolean checkAccount(String... args) throws Exception {

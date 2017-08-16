@@ -1,10 +1,12 @@
 
 class Row {
+  private int id;
   private String login_who;
   private String message;
   private String date;
 
-  Row(String login_who, String message, String date) {
+  Row(int id, String login_who, String message, String date) {
+    this.id = id;
     this.login_who = login_who;
     this.message = message;
     this.date = date;
@@ -15,4 +17,6 @@ class Row {
   String getMessage() {return this.message;}
 
   String getDate() {return this.date;}
+
+  int getId() {return this.id;}
 }

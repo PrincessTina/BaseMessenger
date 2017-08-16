@@ -23,7 +23,7 @@ public class Interface extends Application {
   private String currentContact;
   private String lastSendingDate;
   private TreeSet<Label> contacts = new TreeSet<>(new LabelComparator());
-  private HashMap<String, ArrayList<Row>> conversation = new HashMap<>();
+  private HashMap<String, LinkedList<Row>> conversation = new HashMap<>();
 
   public void start(Stage stage) throws Exception {
     loginWindow(stage);
@@ -299,7 +299,7 @@ public class Interface extends Application {
       label.setPrefWidth(300);
       label.setId("contact");
 
-      ArrayList<Row> rowArrayList = new ArrayList<>();
+      LinkedList<Row> rowArrayList = new LinkedList<>();
       rowArrayList.addAll(ORM.readMessages(label.getText()));
       conversation.put(label.getText(), rowArrayList);
 
@@ -349,17 +349,20 @@ public class Interface extends Application {
 
     //Поток для ловли сообщений
     Thread thread = new Thread(() -> {
-      ArrayList<String> arrayList = new ArrayList<>();
+      ArrayList<Row> rowArrayList = new ArrayList<>();
       while (stage.isShowing()) {
         try {
           if (messageList.size() > 0) {
-            arrayList.addAll(ORM.checkMessages(currentContact));
-            if (arrayList.size() > 0) {
+            rowArrayList.addAll(ORM.checkMessages(currentContact, conversation.get(currentContact).getLast().getId()));
+            if (rowArrayList.size() > 0) {
               Platform.runLater(() -> {
-                for (int i = 0; i < addList.size(); i += 2) {
-                  addMessage(arrayList.get(i), arrayList.get(i + 1), messageList, false);
+                for (Row row: rowArrayList) {
+                  if (conversation.get(currentContact).getLast().getId() < row.getId()) {
+                    addMessage(row.getMessage(), row.getDate(), messageList, false, true);
+                    conversation.get(currentContact).add(row);
+                  }
                 }
-                arrayList.clear();
+                rowArrayList.clear();
               });
             }
           }
@@ -371,6 +374,11 @@ public class Interface extends Application {
     thread.start();
 
     //Events
+    someText.setOnMouseClicked(event -> {
+      for (int i=0; i < conversation.get("lipton").size(); i++) {
+        System.out.println(conversation.get("lipton").get(i).getId());
+      }
+    });
     send.setOnMousePressed(event -> sendMessage(sendArea, messageList));
 
     send.setOnMouseReleased(event -> messageScroll.setVvalue(1));
@@ -430,7 +438,7 @@ public class Interface extends Application {
       if ((sendArea.getText().length() > 0) && (!currentContact.isEmpty())) {
         getLastDate();
         ORM.add(currentContact, sendArea.getText(), lastSendingDate);
-        addMessage(sendArea.getText(), lastSendingDate, messageList, true);
+        addMessage(sendArea.getText(), lastSendingDate, messageList, true, true);
         sendArea.clear();
       }
     } catch (Exception ex) {
@@ -438,42 +446,48 @@ public class Interface extends Application {
     }
   }
 
-  private void addMessage(String messageText, String dateText, ObservableList<Node> messageList, boolean key) {
-    Label message = new Label(messageText);
-    message.setAccessibleText(messageText);
-    double x, distance, length = message.getText().length();
+  private void addMessage(String messageText, String dateText, ObservableList<Node> messageList, boolean keyISent, boolean keyNewMessage) {
+    try {
+      Label message = new Label(messageText);
+      message.setAccessibleText(messageText);
+      double x, distance, length = message.getText().length();
 
-    if (length <= 45) {
-      x = length * 11;
-      distance = 600 - x;
-    } else {
-      x = 450;
-      distance = 150;
+      if (length <= 45) {
+        x = length * 11;
+        distance = 600 - x;
+      } else {
+        x = 450;
+        distance = 150;
+      }
+
+      message.setPrefWidth(x);
+      message.setWrapText(true);
+
+      Label date = new Label(dateText);
+      date.setAccessibleText(dateText);
+
+      if (keyISent) {
+        if (keyNewMessage) {
+          conversation.get(currentContact).add(new Row(ORM.getLastId(userLogin, currentContact), userLogin, messageText, dateText));
+        }
+        message.setAlignment(Pos.TOP_CENTER);
+        date.setAlignment(Pos.TOP_RIGHT);
+        VBox.setMargin(message, new Insets(20, 0, 0, distance));
+        VBox.setMargin(date, new Insets(0, 0, 0, 480));
+        message.setStyle("-fx-font-size: 16px; -fx-background-color: #A2F51D;" +
+            " -fx-background-radius:  0px 20px 20px 10px;");
+      } else {
+        message.setAlignment(Pos.TOP_CENTER);
+        date.setAlignment(Pos.TOP_LEFT);
+        VBox.setMargin(message, new Insets(20, distance, 0, 10));
+        VBox.setMargin(date, new Insets(0, 470, 0, 10));
+        message.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-background-color: #303030;" +
+            " -fx-background-radius:  0px 20px 20px 20px;");
+      }
+      messageList.addAll(message, date);
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
     }
-
-    message.setPrefWidth(x);
-    message.setWrapText(true);
-
-    Label date = new Label(dateText);
-    date.setAccessibleText(dateText);
-
-    if (key) {
-      message.setAlignment(Pos.TOP_CENTER);
-      date.setAlignment(Pos.TOP_RIGHT);
-      VBox.setMargin(message, new Insets(20, 0, 0, distance));
-      VBox.setMargin(date, new Insets(0, 0, 0, 480));
-      message.setStyle("-fx-font-size: 16px; -fx-background-color: #A2F51D;" +
-          " -fx-background-radius:  0px 20px 20px 10px;");
-    } else {
-      message.setAlignment(Pos.TOP_CENTER);
-      date.setAlignment(Pos.TOP_LEFT);
-      VBox.setMargin(message, new Insets(20, distance, 0, 10));
-      VBox.setMargin(date, new Insets(0, 470, 0, 10));
-      message.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-background-color: #303030;" +
-          " -fx-background-radius:  0px 20px 20px 20px;");
-    }
-    conversation.get(currentContact).add(new Row(currentContact, messageText, dateText));
-    messageList.addAll(message, date);
   }
 
   private void contactOnMouseExited(Label thisLabel, boolean key) {
@@ -502,7 +516,7 @@ public class Interface extends Application {
           "-fx-text-fill: green; -fx-border-color: #A2F51D; -fx-font-family: \"Monotype Corsiva\", fantasy;");
 
       messageList.clear();
-      ArrayList<Row> rowArrayList = new ArrayList<>();
+      LinkedList<Row> rowArrayList = new LinkedList<>();
 
       if (conversation.containsKey(currentContact)) {
         rowArrayList.addAll(conversation.get(currentContact));
@@ -513,9 +527,9 @@ public class Interface extends Application {
 
       for (Row row : rowArrayList) {
         if (row.getLogin_who().equals(userLogin)) {
-          addMessage(row.getMessage(), row.getDate(), messageList, true);
+          addMessage(row.getMessage(), row.getDate(), messageList, true, false);
         } else {
-          addMessage(row.getMessage(), row.getDate(), messageList, false);
+          addMessage(row.getMessage(), row.getDate(), messageList, false, false);
         }
       }
 
