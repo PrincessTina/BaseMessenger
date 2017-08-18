@@ -23,7 +23,7 @@ public class Interface extends Application {
   private String currentContact;
   private String lastSendingDate;
   private TreeSet<Label> contacts = new TreeSet<>(new LabelComparator());
-  private HashMap<String, LinkedList<Row>> conversation = new HashMap<>();
+  private HashMap<String, ArrayList<Row>> conversation = new HashMap<>();
 
   public void start(Stage stage) throws Exception {
     loginWindow(stage);
@@ -229,7 +229,10 @@ public class Interface extends Application {
           password1List.add(cross1);
         } else {
           userLogin = login.getText();
+          long startTime = System.currentTimeMillis();
           mainWindow(stage);
+          long estimatedTime = System.currentTimeMillis() - startTime;
+          System.out.println(estimatedTime * 0.001);
         }
       } catch (Exception ex) {
         System.out.println(ex.getMessage());
@@ -288,6 +291,12 @@ public class Interface extends Application {
     messageScroll.setPrefHeight(600);
     messageScroll.setId("blackBorder");
 
+    Button button = new Button("Новое сообщение");
+
+    StackPane stackPane = new StackPane(messageScroll, button);
+    button.toBack();
+    StackPane.setMargin(button, new Insets(510, 200, 0, 250));
+
     VBox contactsBox = new VBox();
     ObservableList<Node> contactList = contactsBox.getChildren();
 
@@ -299,12 +308,12 @@ public class Interface extends Application {
       label.setPrefWidth(300);
       label.setId("contact");
 
-      LinkedList<Row> rowArrayList = new LinkedList<>();
+      ArrayList<Row> rowArrayList = new ArrayList<>();
       rowArrayList.addAll(ORM.readMessages(label.getText()));
       conversation.put(label.getText(), rowArrayList);
 
 
-      label.setOnMouseClicked(subEvent -> setCurrentContact(label, messageList, messageScroll));
+      label.setOnMouseClicked(subEvent -> setCurrentContact(label, messageList, messageScroll, button));
       label.setOnMouseExited(subEvent -> contactOnMouseExited(label, false));
       label.setOnMouseEntered(subEvent -> contactOnMouseEntered(label));
     }
@@ -334,7 +343,7 @@ public class Interface extends Application {
     centerBox.setPadding(new Insets(20, 0, 20, 0));
     centerBox.setStyle("-fx-background-color: linear-gradient(#303030, #303030, #68b800, #a2f51d, #68b800, #303030, #303030)");
 
-    VBox rightVBox = new VBox(someText, messageScroll, sendBox);
+    VBox rightVBox = new VBox(someText, stackPane, sendBox);
     rightVBox.setSpacing(20);
     rightVBox.setPadding(new Insets(20, 20, 20, 0));
 
@@ -353,18 +362,27 @@ public class Interface extends Application {
       while (stage.isShowing()) {
         try {
           if (messageList.size() > 0) {
-            rowArrayList.addAll(ORM.checkMessages(currentContact, conversation.get(currentContact).getLast().getId()));
+            rowArrayList.addAll(ORM.checkMessages(currentContact,
+                conversation.get(currentContact).get(conversation.get(currentContact).size() - 1).getId()));
+
             if (rowArrayList.size() > 0) {
               Platform.runLater(() -> {
-                for (Row row: rowArrayList) {
-                  if (conversation.get(currentContact).getLast().getId() < row.getId()) {
+                for (Row row : rowArrayList) {
+                  if (conversation.get(currentContact).get(conversation.get(currentContact).size() - 1).getId() < row.getId()) {
                     addMessage(row.getMessage(), row.getDate(), messageList, false, true);
                     conversation.get(currentContact).add(row);
                   }
                 }
+                if (messageScroll.getVvalue() != 1.0) {
+                  button.toFront();
+                }
                 rowArrayList.clear();
               });
             }
+          }
+
+          if (messageScroll.getVvalue() == 1.0) {
+            Platform.runLater(button::toBack);
           }
         } catch (Exception ex) {
           System.out.println(ex.getMessage());
@@ -374,8 +392,13 @@ public class Interface extends Application {
     thread.start();
 
     //Events
+    button.setOnAction(event -> {
+      messageScroll.setVvalue(1.0);
+      button.toBack();
+    });
+
     someText.setOnMouseClicked(event -> {
-      for (int i=0; i < conversation.get("lipton").size(); i++) {
+      for (int i = 0; i < conversation.get("lipton").size(); i++) {
         System.out.println(conversation.get("lipton").get(i).getId());
       }
     });
@@ -388,7 +411,7 @@ public class Interface extends Application {
         double position, i = 1;
         for (Label label : contacts) {
           if (label.getText().equals(searchLine.getText())) {
-            setCurrentContact(label, messageList, messageScroll);
+            setCurrentContact(label, messageList, messageScroll, button);
             position = i;
             contactsScroll.setVvalue(position / contacts.size());
           }
@@ -418,9 +441,9 @@ public class Interface extends Application {
             addField.clear();
             addList.add(tick);
 
-            setCurrentContact(newContact, messageList, messageScroll);
+            setCurrentContact(newContact, messageList, messageScroll, button);
 
-            newContact.setOnMouseClicked(subEvent -> setCurrentContact(newContact, messageList, messageScroll));
+            newContact.setOnMouseClicked(subEvent -> setCurrentContact(newContact, messageList, messageScroll, button));
             newContact.setOnMouseExited(subEvent -> contactOnMouseExited(newContact, false));
             newContact.setOnMouseEntered(subEvent -> contactOnMouseEntered(newContact));
           } else {
@@ -504,8 +527,10 @@ public class Interface extends Application {
     }
   }
 
-  private void setCurrentContact(Label thisLabel, ObservableList<Node> messageList, ScrollPane messageScroll) {
+  private void setCurrentContact(Label thisLabel, ObservableList<Node> messageList, ScrollPane messageScroll, Button button) {
     try {
+      button.toBack();
+
       for (Label label : contacts) {
         if (label.getText().equals(currentContact)) {
           contactOnMouseExited(label, true);
@@ -516,7 +541,7 @@ public class Interface extends Application {
           "-fx-text-fill: green; -fx-border-color: #A2F51D; -fx-font-family: \"Monotype Corsiva\", fantasy;");
 
       messageList.clear();
-      LinkedList<Row> rowArrayList = new LinkedList<>();
+      ArrayList<Row> rowArrayList = new ArrayList<>();
 
       if (conversation.containsKey(currentContact)) {
         rowArrayList.addAll(conversation.get(currentContact));

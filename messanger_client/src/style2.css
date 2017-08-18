@@ -2,6 +2,21 @@
 -fx-background-color: #303030;
 }
 
+.button {
+-fx-text-fill: white;
+-fx-font-family: "Monotype Corsiva", serif;
+-fx-font-size: 20px;
+-fx-background-color: linear-gradient(#262626, #68B800);
+-fx-background-radius: 10px; 
+-fx-border-style: hidden hidden solid hidden; 
+-fx-border-width: 1px;
+-fx-border-radius: 10px;
+}
+
+.button:hover {
+ -fx-background-color: linear-gradient(#68B800, #262626);
+ }
+
 #contact {
 -fx-font-size: 20px;
 -fx-border-style: hidden hidden solid hidden;
