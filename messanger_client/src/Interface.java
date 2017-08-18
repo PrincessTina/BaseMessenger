@@ -1,8 +1,15 @@
 import javafx.application.*;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.*;
 import javafx.scene.image.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
@@ -11,6 +18,7 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -31,6 +39,11 @@ public class Interface extends Application {
   }
 
   private void loginWindow(Stage stage) throws Exception {
+    Dimension sSize = Toolkit.getDefaultToolkit ().getScreenSize ();
+    int vert = sSize.height;
+    int hor  = sSize.width;
+    System.out.println(vert + " " + hor);
+
     key = false;
 
     ImageView tick = new ImageView(new Image(new FileInputStream("..\\8240774.png")));
@@ -380,16 +393,19 @@ public class Interface extends Application {
               });
             }
           }
-
-          if (messageScroll.getVvalue() == 1.0) {
-            Platform.runLater(button::toBack);
-          }
         } catch (Exception ex) {
           System.out.println(ex.getMessage());
         }
       }
     });
     thread.start();
+
+    Thread thread1 = new Thread(() -> Platform.runLater(() -> {
+      if (messageScroll.getVvalue() == 1) {
+        button.toBack();
+      }
+    }));
+    thread1.start();
 
     //Events
     button.setOnAction(event -> {
