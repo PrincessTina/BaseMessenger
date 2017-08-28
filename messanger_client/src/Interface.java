@@ -18,7 +18,6 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
 
-import java.awt.*;
 import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -28,10 +27,12 @@ import java.util.*;
 public class Interface extends Application {
   private boolean key;
   static String userLogin;
-  private String currentContact;
+  private String currentContact = "null";
   private String lastSendingDate;
   private TreeSet<Label> contacts = new TreeSet<>(new LabelComparator());
   private HashMap<String, ArrayList<Row>> conversation = new HashMap<>();
+  private int lastMessageId;
+  private boolean isButtonFront = false;
 
   public void start(Stage stage) throws Exception {
     loginWindow(stage);
@@ -39,11 +40,6 @@ public class Interface extends Application {
   }
 
   private void loginWindow(Stage stage) throws Exception {
-    Dimension sSize = Toolkit.getDefaultToolkit ().getScreenSize ();
-    int vert = sSize.height;
-    int hor  = sSize.width;
-    System.out.println(vert + " " + hor);
-
     key = false;
 
     ImageView tick = new ImageView(new Image(new FileInputStream("..\\8240774.png")));
@@ -370,27 +366,53 @@ public class Interface extends Application {
     stage.show();
 
     //Поток для ловли сообщений
+
+
     Thread thread = new Thread(() -> {
       ArrayList<Row> rowArrayList = new ArrayList<>();
+
       while (stage.isShowing()) {
         try {
-          if (messageList.size() > 0) {
-            rowArrayList.addAll(ORM.checkMessages(currentContact,
-                conversation.get(currentContact).get(conversation.get(currentContact).size() - 1).getId()));
+          if (!currentContact.equals("null")) {
+            if (conversation.get(currentContact).size() == 0) {
+              lastMessageId = 0;
+            } else {
+              lastMessageId = conversation.get(currentContact).get(conversation.get(currentContact).size() - 1).getId();
+            }
+            rowArrayList.addAll(ORM.checkMessages(currentContact, lastMessageId));
 
             if (rowArrayList.size() > 0) {
               Platform.runLater(() -> {
                 for (Row row : rowArrayList) {
-                  if (conversation.get(currentContact).get(conversation.get(currentContact).size() - 1).getId() < row.getId()) {
+                  if (lastMessageId < row.getId()) {
                     addMessage(row.getMessage(), row.getDate(), messageList, false, true);
                     conversation.get(currentContact).add(row);
                   }
                 }
-                if (messageScroll.getVvalue() != 1.0) {
+                if ((messageScroll.getVvalue() != 1) && (!isButtonFront)) {
                   button.toFront();
+                  isButtonFront = true;
+
+                  Thread thread1 = new Thread(() -> {
+                    while (stage.isShowing()) {
+                      if (messageScroll.getVvalue() == 1) {
+                        Platform.runLater(button::toBack);
+                        isButtonFront = false;
+                        break;
+                      }
+                    }
+                  });
+                  thread1.start();
                 }
                 rowArrayList.clear();
               });
+            }
+          }
+          for (String contact: ORM.checkMessagesFromOthers(currentContact, lastMessageId)) {
+            for (Label label: contacts) {
+              if (label.getText().equals(contact)) {
+                System.out.println(contact);
+              }
             }
           }
         } catch (Exception ex) {
@@ -399,13 +421,6 @@ public class Interface extends Application {
       }
     });
     thread.start();
-
-    Thread thread1 = new Thread(() -> Platform.runLater(() -> {
-      if (messageScroll.getVvalue() == 1) {
-        button.toBack();
-      }
-    }));
-    thread1.start();
 
     //Events
     button.setOnAction(event -> {
@@ -512,7 +527,7 @@ public class Interface extends Application {
         message.setAlignment(Pos.TOP_CENTER);
         date.setAlignment(Pos.TOP_RIGHT);
         VBox.setMargin(message, new Insets(20, 0, 0, distance));
-        VBox.setMargin(date, new Insets(0, 0, 0, 480));
+        VBox.setMargin(date, new Insets(0, 0, 0, 485));
         message.setStyle("-fx-font-size: 16px; -fx-background-color: #A2F51D;" +
             " -fx-background-radius:  0px 20px 20px 10px;");
       } else {
@@ -523,6 +538,8 @@ public class Interface extends Application {
         message.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-background-color: #303030;" +
             " -fx-background-radius:  0px 20px 20px 20px;");
       }
+      date.setStyle("-fx-font-size: 16px; -fx-font-family: 'Cambria'");
+
       messageList.addAll(message, date);
     } catch (Exception ex) {
       System.out.println(ex.getMessage());
@@ -581,7 +598,7 @@ public class Interface extends Application {
   }
 
   private void getLastDate() {
-    lastSendingDate = new SimpleDateFormat("HH:mm:ss dd/MM/yy").format(new Date());
+    lastSendingDate = new SimpleDateFormat("HH:mm dd/MM/yy").format(new Date());
   }
 
   private void removeExtraElement(ObservableList... listing) {

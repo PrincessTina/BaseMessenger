@@ -133,6 +133,31 @@ class ORM {
     return rowArrayList;
   }
 
+  static ArrayList<String> checkMessagesFromOthers(String currentContact, String date, int id) throws Exception {
+    fixConnection();
+
+    ArrayList<String> labelsList = new ArrayList<>();
+    StringBuilder request = new StringBuilder();
+    CachedRowSet resultSet = new CachedRowSetImpl();
+    Statement statement = connection.createStatement();
+
+    request.append("select distinct login from messages inner join users on (id_who = users.id) where id_whose = (select id from users where login = '");
+    request.append(Interface.userLogin);
+    request.append("') and messages.id > ");
+    request.append(id);
+    request.append(" and date > ");
+    request.append(date);
+    request.append(" and id_who <> (select id from users where login = '");
+    request.append(currentContact);
+    request.append("');");
+    resultSet.populate(statement.executeQuery(request.toString()));
+
+    while (resultSet.next()) {
+      labelsList.add(resultSet.getString(1));
+    }
+    return labelsList;
+  }
+
   static boolean checkAccount(String... args) throws Exception {
     fixConnection();
 

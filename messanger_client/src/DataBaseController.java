@@ -9,10 +9,10 @@ class DataBaseController {
     Connection connection;
     PGConnectionPoolDataSource dataSource = new PGConnectionPoolDataSource();
     dataSource.setDatabaseName("db");
-    dataSource.setServerName("146.185.143.190");
+    dataSource.setServerName("188.166.39.53");
     dataSource.setPortNumber(5432);
 
-    connection = dataSource.getConnection("tina", "");
+    connection = dataSource.getConnection("tina", "abjktnjdsq`;br1999");
     return connection;
   }
 }
