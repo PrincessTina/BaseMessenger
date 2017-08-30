@@ -322,8 +322,10 @@ public class Interface extends Application {
       rowArrayList.addAll(ORM.readMessages(label.getText()));
       conversation.put(label.getText(), rowArrayList);
 
-      if (rowArrayList.get(rowArrayList.size() - 1).getId() > lastMessageId) {
-        lastMessageId = rowArrayList.get(rowArrayList.size() - 1).getId();
+      if (!rowArrayList.isEmpty()) {
+        if (rowArrayList.get(rowArrayList.size() - 1).getId() > lastMessageId) {
+          lastMessageId = rowArrayList.get(rowArrayList.size() - 1).getId();
+        }
       }
 
       label.setOnMouseClicked(subEvent -> setCurrentContact(label, messageList, messageScroll, button));
@@ -376,11 +378,14 @@ public class Interface extends Application {
       while (stage.isShowing()) {
         try {
           if (!currentContact.equals("null")) {
-            if (conversation.get(currentContact).size() == 0) {
-              lastMessageOfCurrentContactId = 0;
+            if (conversation.containsKey(currentContact)) {
+              if (conversation.get(currentContact).size() > 0) {
+                lastMessageOfCurrentContactId = conversation.get(currentContact).get(conversation.get(currentContact).size() - 1).getId();
+              }
             } else {
-              lastMessageOfCurrentContactId = conversation.get(currentContact).get(conversation.get(currentContact).size() - 1).getId();
+              lastMessageOfCurrentContactId = 0;
             }
+
             rowArrayList.addAll(ORM.checkMessages(currentContact, lastMessageOfCurrentContactId));
 
             if (rowArrayList.size() > 0) {
@@ -411,8 +416,8 @@ public class Interface extends Application {
             }
           }
 
-          for (String contact: ORM.checkMessagesFromOthers(currentContact, lastMessageId)) {
-            for (Label label: contacts) {
+          for (String contact : ORM.checkMessagesFromOthers(currentContact, lastMessageId)) {
+            for (Label label : contacts) {
               if (label.getText().equals(contact)) {
                 System.out.println(contact);
               } else {
