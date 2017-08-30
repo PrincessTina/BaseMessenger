@@ -99,10 +99,14 @@ class ORM {
     fixConnection();
 
     TreeSet<Label> searchedSet = new TreeSet<>(new LabelComparator());
+    StringBuilder request = new StringBuilder();
     CachedRowSet resultSet = new CachedRowSetImpl();
+    Statement statement = connection.createStatement();
 
-    resultSet.populate(connection.createStatement().executeQuery("select login from contacts inner join users " +
-        "on(id_whose = id) where id_who = (select id from users where login = '" + myLogin + "');"));
+    request.append("select login from contacts inner join users on(id_whose = id) where id_who = (select id from users where login = '");
+    request.append(myLogin);
+    request.append("');");
+    resultSet.populate(statement.executeQuery(request.toString()));
 
     while (resultSet.next()) {
       searchedSet.add(new Label(resultSet.getString(1)));
@@ -133,7 +137,7 @@ class ORM {
     return rowArrayList;
   }
 
-  static ArrayList<String> checkMessagesFromOthers(String currentContact, String date, int id) throws Exception {
+  static ArrayList<String> checkMessagesFromOthers(String currentContact, int id) throws Exception {
     fixConnection();
 
     ArrayList<String> labelsList = new ArrayList<>();
@@ -145,11 +149,14 @@ class ORM {
     request.append(Interface.userLogin);
     request.append("') and messages.id > ");
     request.append(id);
-    request.append(" and date > ");
-    request.append(date);
-    request.append(" and id_who <> (select id from users where login = '");
-    request.append(currentContact);
-    request.append("');");
+
+    if (!currentContact.equals("null")) {
+      request.append(" and id_who <> (select id from users where login = '");
+      request.append(currentContact);
+      request.append("')");
+    }
+    request.append(";");
+
     resultSet.populate(statement.executeQuery(request.toString()));
 
     while (resultSet.next()) {

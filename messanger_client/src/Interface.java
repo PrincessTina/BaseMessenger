@@ -31,7 +31,8 @@ public class Interface extends Application {
   private String lastSendingDate;
   private TreeSet<Label> contacts = new TreeSet<>(new LabelComparator());
   private HashMap<String, ArrayList<Row>> conversation = new HashMap<>();
-  private int lastMessageId;
+  private int lastMessageOfCurrentContactId;
+  private int lastMessageId = 0;
   private boolean isButtonFront = false;
 
   public void start(Stage stage) throws Exception {
@@ -321,6 +322,9 @@ public class Interface extends Application {
       rowArrayList.addAll(ORM.readMessages(label.getText()));
       conversation.put(label.getText(), rowArrayList);
 
+      if (rowArrayList.get(rowArrayList.size() - 1).getId() > lastMessageId) {
+        lastMessageId = rowArrayList.get(rowArrayList.size() - 1).getId();
+      }
 
       label.setOnMouseClicked(subEvent -> setCurrentContact(label, messageList, messageScroll, button));
       label.setOnMouseExited(subEvent -> contactOnMouseExited(label, false));
@@ -366,8 +370,6 @@ public class Interface extends Application {
     stage.show();
 
     //Поток для ловли сообщений
-
-
     Thread thread = new Thread(() -> {
       ArrayList<Row> rowArrayList = new ArrayList<>();
 
@@ -375,16 +377,16 @@ public class Interface extends Application {
         try {
           if (!currentContact.equals("null")) {
             if (conversation.get(currentContact).size() == 0) {
-              lastMessageId = 0;
+              lastMessageOfCurrentContactId = 0;
             } else {
-              lastMessageId = conversation.get(currentContact).get(conversation.get(currentContact).size() - 1).getId();
+              lastMessageOfCurrentContactId = conversation.get(currentContact).get(conversation.get(currentContact).size() - 1).getId();
             }
-            rowArrayList.addAll(ORM.checkMessages(currentContact, lastMessageId));
+            rowArrayList.addAll(ORM.checkMessages(currentContact, lastMessageOfCurrentContactId));
 
             if (rowArrayList.size() > 0) {
               Platform.runLater(() -> {
                 for (Row row : rowArrayList) {
-                  if (lastMessageId < row.getId()) {
+                  if (row.getId() > lastMessageOfCurrentContactId) {
                     addMessage(row.getMessage(), row.getDate(), messageList, false, true);
                     conversation.get(currentContact).add(row);
                   }
@@ -408,10 +410,13 @@ public class Interface extends Application {
               });
             }
           }
+
           for (String contact: ORM.checkMessagesFromOthers(currentContact, lastMessageId)) {
             for (Label label: contacts) {
               if (label.getText().equals(contact)) {
                 System.out.println(contact);
+              } else {
+                System.out.println("new: " + contact);
               }
             }
           }
