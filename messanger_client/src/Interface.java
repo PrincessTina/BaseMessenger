@@ -417,12 +417,16 @@ public class Interface extends Application {
           }
 
           for (String contact : ORM.checkMessagesFromOthers(currentContact, lastMessageId)) {
-            for (Label label : contacts) {
-              if (label.getText().equals(contact)) {
-                System.out.println(contact);
-              } else {
-                System.out.println("new: " + contact);
-              }
+            ImageView cross = new ImageView(new Image(new FileInputStream("..\\Red X.png")));
+            cross.setFitHeight(30);
+            cross.setFitWidth(30);
+            cross.setEffect(new Lighting());
+
+            if (conversation.containsKey(contact)) {
+              System.out.println(contact);
+              contacts
+            } else {
+              System.out.println("new: " + contact);
             }
           }
         } catch (Exception ex) {
