@@ -35,30 +35,28 @@
       <file leaf-file-name="Interface.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Interface.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="315" column="34" lean-forward="true" selection-start-line="315" selection-start-column="34" selection-end-line="315" selection-end-column="34" />
+            <state relative-caret-position="89">
+              <caret line="43" column="57" lean-forward="false" selection-start-line="43" selection-start-column="57" selection-end-line="43" selection-end-column="57" />
               <folding>
-                <element signature="n#!!doc;n#Interface#0" expanded="false" />
-                <element signature="method#start#0;class#Interface#0" expanded="false" />
                 <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
-                <element signature="e#4662#4834#0" expanded="false" />
-                <element signature="e#4868#5149#0" expanded="false" />
-                <element signature="e#5183#5356#0" expanded="false" />
-                <element signature="e#5387#5501#0" expanded="false" />
-                <element signature="e#5544#5791#0" expanded="false" />
-                <element signature="e#6093#6344#0" expanded="false" />
-                <element signature="e#6618#8257#0" expanded="false" />
+                <element signature="e#4790#4962#0" expanded="false" />
+                <element signature="e#4996#5473#0" expanded="false" />
+                <element signature="e#5507#5876#0" expanded="false" />
+                <element signature="e#5907#6021#0" expanded="false" />
+                <element signature="e#6228#6475#0" expanded="false" />
+                <element signature="e#6777#7028#0" expanded="false" />
+                <element signature="method#mainWindow#0;class#Interface#0" expanded="false" />
+                <element signature="e#15087#15511#0" expanded="false" />
+                <element signature="e#15544#16270#0" expanded="false" />
+                <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+                <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+                <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+                <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
                 <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
-                <marker date="1504094630620" expanded="false" signature="15205:15359" ph="{...}" />
-                <marker date="1504094630620" expanded="false" signature="15544:15946" ph="{...}" />
-                <marker date="1504094630620" expanded="false" signature="15988:17251" ph="{...}" />
-                <marker date="1504094630620" expanded="false" signature="17339:17719" ph="{...}" />
-                <marker date="1504094630620" expanded="false" signature="19522:19801" ph="{...}" />
-                <marker date="1504094630620" expanded="false" signature="19857:20129" ph="{...}" />
-                <marker date="1504094630620" expanded="false" signature="20256:21469" ph="{...}" />
-                <marker date="1504094630620" expanded="false" signature="21499:21506" ph=" { " />
-                <marker date="1504094630620" expanded="false" signature="21582:21586" ph=" }" />
-                <marker date="1504094630620" expanded="false" signature="21649:21764" ph="{...}" />
+                <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+                <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+                <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+                <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -67,16 +65,18 @@
       <file leaf-file-name="ORM.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ORM.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="97" column="70" lean-forward="true" selection-start-line="97" selection-start-column="70" selection-end-line="97" selection-end-column="70" />
+            <state relative-caret-position="402">
+              <caret line="158" column="21" lean-forward="false" selection-start-line="158" selection-start-column="21" selection-end-line="158" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#add#0;class#ORM#0" expanded="false" />
                 <element signature="method#readMessages#0;class#ORM#0" expanded="false" />
                 <element signature="method#getLastId#0;class#ORM#0" expanded="false" />
+                <element signature="method#readContacts#0;class#ORM#0" expanded="false" />
                 <element signature="method#checkMessages#0;class#ORM#0" expanded="false" />
                 <element signature="method#checkAccount#0;class#ORM#0" expanded="false" />
                 <element signature="method#fixConnection#0;class#ORM#0" expanded="false" />
+                <marker date="1504807951979" expanded="true" signature="5771:5971" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -95,8 +95,8 @@
       <file leaf-file-name="DataBaseController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DataBaseController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="14" column="69" lean-forward="false" selection-start-line="14" selection-start-column="69" selection-end-line="14" selection-end-column="69" />
+            <state relative-caret-position="294">
+              <caret line="17" column="1" lean-forward="true" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -107,7 +107,11 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
               <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#159#160#0" expanded="false" />
+                <element signature="e#214#215#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -128,6 +132,7 @@
       <find>conversation.get</find>
       <find>Linked</find>
       <find>LinkedList</find>
+      <find>lastMessageId</find>
     </findStrings>
   </component>
   <component name="GradleLocalSettings">
@@ -163,10 +168,10 @@
     <treeState />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1" />
-    <option name="y" value="1" />
-    <option name="width" value="1918" />
-    <option name="height" value="1030" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -647,27 +652,28 @@
       <workItem from="1502788475087" duration="16375000" />
       <workItem from="1503046955555" duration="16777000" />
       <workItem from="1503162606092" duration="21357000" />
+      <workItem from="1504801102718" duration="16820000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="311396000" />
+    <option name="totallyTimeSpent" value="333647000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="1" width="1918" height="1030" extended-state="0" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32896176" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32821077" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1704918" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17430167" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17343578" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -679,36 +685,13 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25586593" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2557629" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1704918" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25586593" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32896176" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17430167" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22100313" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -750,7 +733,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="77" />
+      <option name="time" value="83" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -763,7 +746,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#159#160#0" expanded="false" />
+            <element signature="e#214#215#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -772,27 +759,25 @@
         <state relative-caret-position="2751">
           <caret line="336" column="53" lean-forward="false" selection-start-line="336" selection-start-column="53" selection-end-line="336" selection-end-column="53" />
           <folding>
-            <element signature="n#!!doc;n#Interface#0" expanded="false" />
-            <element signature="method#start#0;class#Interface#0" expanded="false" />
             <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
-            <element signature="e#4662#4834#0" expanded="false" />
-            <element signature="e#4868#5149#0" expanded="false" />
-            <element signature="e#5183#5356#0" expanded="false" />
-            <element signature="e#5387#5501#0" expanded="false" />
-            <element signature="e#5544#5791#0" expanded="false" />
-            <element signature="e#6093#6344#0" expanded="false" />
-            <element signature="e#6618#8257#0" expanded="false" />
+            <element signature="e#4790#4962#0" expanded="false" />
+            <element signature="e#4996#5473#0" expanded="false" />
+            <element signature="e#5507#5876#0" expanded="false" />
+            <element signature="e#5907#6021#0" expanded="false" />
+            <element signature="e#6228#6475#0" expanded="false" />
+            <element signature="e#6777#7028#0" expanded="false" />
+            <element signature="method#mainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="e#15087#15511#0" expanded="false" />
+            <element signature="e#15544#16270#0" expanded="false" />
+            <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+            <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+            <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
             <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
-            <marker date="1504094630620" expanded="false" signature="15205:15359" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15544:15946" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15988:17251" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="17339:17719" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19522:19801" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19857:20129" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="20256:21469" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="21499:21506" ph=" { " />
-            <marker date="1504094630620" expanded="false" signature="21582:21586" ph=" }" />
-            <marker date="1504094630620" expanded="false" signature="21649:21764" ph="{...}" />
+            <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+            <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -814,9 +799,11 @@
             <element signature="method#add#0;class#ORM#0" expanded="false" />
             <element signature="method#readMessages#0;class#ORM#0" expanded="false" />
             <element signature="method#getLastId#0;class#ORM#0" expanded="false" />
+            <element signature="method#readContacts#0;class#ORM#0" expanded="false" />
             <element signature="method#checkMessages#0;class#ORM#0" expanded="false" />
             <element signature="method#checkAccount#0;class#ORM#0" expanded="false" />
             <element signature="method#fixConnection#0;class#ORM#0" expanded="false" />
+            <marker date="1504807951979" expanded="true" signature="5771:5971" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -841,7 +828,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#159#160#0" expanded="false" />
+            <element signature="e#214#215#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -850,27 +841,25 @@
         <state relative-caret-position="9933">
           <caret line="473" column="91" lean-forward="false" selection-start-line="473" selection-start-column="91" selection-end-line="473" selection-end-column="91" />
           <folding>
-            <element signature="n#!!doc;n#Interface#0" expanded="false" />
-            <element signature="method#start#0;class#Interface#0" expanded="false" />
             <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
-            <element signature="e#4662#4834#0" expanded="false" />
-            <element signature="e#4868#5149#0" expanded="false" />
-            <element signature="e#5183#5356#0" expanded="false" />
-            <element signature="e#5387#5501#0" expanded="false" />
-            <element signature="e#5544#5791#0" expanded="false" />
-            <element signature="e#6093#6344#0" expanded="false" />
-            <element signature="e#6618#8257#0" expanded="false" />
+            <element signature="e#4790#4962#0" expanded="false" />
+            <element signature="e#4996#5473#0" expanded="false" />
+            <element signature="e#5507#5876#0" expanded="false" />
+            <element signature="e#5907#6021#0" expanded="false" />
+            <element signature="e#6228#6475#0" expanded="false" />
+            <element signature="e#6777#7028#0" expanded="false" />
+            <element signature="method#mainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="e#15087#15511#0" expanded="false" />
+            <element signature="e#15544#16270#0" expanded="false" />
+            <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+            <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+            <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
             <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
-            <marker date="1504094630620" expanded="false" signature="15205:15359" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15544:15946" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15988:17251" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="17339:17719" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19522:19801" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19857:20129" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="20256:21469" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="21499:21506" ph=" { " />
-            <marker date="1504094630620" expanded="false" signature="21582:21586" ph=" }" />
-            <marker date="1504094630620" expanded="false" signature="21649:21764" ph="{...}" />
+            <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+            <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -892,9 +881,11 @@
             <element signature="method#add#0;class#ORM#0" expanded="false" />
             <element signature="method#readMessages#0;class#ORM#0" expanded="false" />
             <element signature="method#getLastId#0;class#ORM#0" expanded="false" />
+            <element signature="method#readContacts#0;class#ORM#0" expanded="false" />
             <element signature="method#checkMessages#0;class#ORM#0" expanded="false" />
             <element signature="method#checkAccount#0;class#ORM#0" expanded="false" />
             <element signature="method#fixConnection#0;class#ORM#0" expanded="false" />
+            <marker date="1504807951979" expanded="true" signature="5771:5971" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -919,7 +910,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#159#160#0" expanded="false" />
+            <element signature="e#214#215#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -928,27 +923,25 @@
         <state relative-caret-position="5544">
           <caret line="264" column="14" lean-forward="false" selection-start-line="264" selection-start-column="14" selection-end-line="264" selection-end-column="14" />
           <folding>
-            <element signature="n#!!doc;n#Interface#0" expanded="false" />
-            <element signature="method#start#0;class#Interface#0" expanded="false" />
             <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
-            <element signature="e#4662#4834#0" expanded="false" />
-            <element signature="e#4868#5149#0" expanded="false" />
-            <element signature="e#5183#5356#0" expanded="false" />
-            <element signature="e#5387#5501#0" expanded="false" />
-            <element signature="e#5544#5791#0" expanded="false" />
-            <element signature="e#6093#6344#0" expanded="false" />
-            <element signature="e#6618#8257#0" expanded="false" />
+            <element signature="e#4790#4962#0" expanded="false" />
+            <element signature="e#4996#5473#0" expanded="false" />
+            <element signature="e#5507#5876#0" expanded="false" />
+            <element signature="e#5907#6021#0" expanded="false" />
+            <element signature="e#6228#6475#0" expanded="false" />
+            <element signature="e#6777#7028#0" expanded="false" />
+            <element signature="method#mainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="e#15087#15511#0" expanded="false" />
+            <element signature="e#15544#16270#0" expanded="false" />
+            <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+            <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+            <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
             <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
-            <marker date="1504094630620" expanded="false" signature="15205:15359" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15544:15946" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15988:17251" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="17339:17719" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19522:19801" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19857:20129" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="20256:21469" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="21499:21506" ph=" { " />
-            <marker date="1504094630620" expanded="false" signature="21582:21586" ph=" }" />
-            <marker date="1504094630620" expanded="false" signature="21649:21764" ph="{...}" />
+            <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+            <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -970,9 +963,11 @@
             <element signature="method#add#0;class#ORM#0" expanded="false" />
             <element signature="method#readMessages#0;class#ORM#0" expanded="false" />
             <element signature="method#getLastId#0;class#ORM#0" expanded="false" />
+            <element signature="method#readContacts#0;class#ORM#0" expanded="false" />
             <element signature="method#checkMessages#0;class#ORM#0" expanded="false" />
             <element signature="method#checkAccount#0;class#ORM#0" expanded="false" />
             <element signature="method#fixConnection#0;class#ORM#0" expanded="false" />
+            <marker date="1504807951979" expanded="true" signature="5771:5971" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -991,27 +986,25 @@
         <state relative-caret-position="147">
           <caret line="7" column="27" lean-forward="false" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
           <folding>
-            <element signature="n#!!doc;n#Interface#0" expanded="false" />
-            <element signature="method#start#0;class#Interface#0" expanded="false" />
             <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
-            <element signature="e#4662#4834#0" expanded="false" />
-            <element signature="e#4868#5149#0" expanded="false" />
-            <element signature="e#5183#5356#0" expanded="false" />
-            <element signature="e#5387#5501#0" expanded="false" />
-            <element signature="e#5544#5791#0" expanded="false" />
-            <element signature="e#6093#6344#0" expanded="false" />
-            <element signature="e#6618#8257#0" expanded="false" />
+            <element signature="e#4790#4962#0" expanded="false" />
+            <element signature="e#4996#5473#0" expanded="false" />
+            <element signature="e#5507#5876#0" expanded="false" />
+            <element signature="e#5907#6021#0" expanded="false" />
+            <element signature="e#6228#6475#0" expanded="false" />
+            <element signature="e#6777#7028#0" expanded="false" />
+            <element signature="method#mainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="e#15087#15511#0" expanded="false" />
+            <element signature="e#15544#16270#0" expanded="false" />
+            <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+            <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+            <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
             <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
-            <marker date="1504094630620" expanded="false" signature="15205:15359" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15544:15946" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15988:17251" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="17339:17719" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19522:19801" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19857:20129" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="20256:21469" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="21499:21506" ph=" { " />
-            <marker date="1504094630620" expanded="false" signature="21582:21586" ph=" }" />
-            <marker date="1504094630620" expanded="false" signature="21649:21764" ph="{...}" />
+            <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+            <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1021,69 +1014,25 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc;n#Interface#0" expanded="false" />
-            <element signature="method#start#0;class#Interface#0" expanded="false" />
             <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
-            <element signature="e#4662#4834#0" expanded="false" />
-            <element signature="e#4868#5149#0" expanded="false" />
-            <element signature="e#5183#5356#0" expanded="false" />
-            <element signature="e#5387#5501#0" expanded="false" />
-            <element signature="e#5544#5791#0" expanded="false" />
-            <element signature="e#6093#6344#0" expanded="false" />
-            <element signature="e#6618#8257#0" expanded="false" />
+            <element signature="e#4790#4962#0" expanded="false" />
+            <element signature="e#4996#5473#0" expanded="false" />
+            <element signature="e#5507#5876#0" expanded="false" />
+            <element signature="e#5907#6021#0" expanded="false" />
+            <element signature="e#6228#6475#0" expanded="false" />
+            <element signature="e#6777#7028#0" expanded="false" />
+            <element signature="method#mainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="e#15087#15511#0" expanded="false" />
+            <element signature="e#15544#16270#0" expanded="false" />
+            <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+            <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+            <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
             <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
-            <marker date="1504094630620" expanded="false" signature="15205:15359" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15544:15946" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15988:17251" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="17339:17719" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19522:19801" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19857:20129" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="20256:21469" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="21499:21506" ph=" { " />
-            <marker date="1504094630620" expanded="false" signature="21582:21586" ph=" }" />
-            <marker date="1504094630620" expanded="false" signature="21649:21764" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/event/Event.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/scene/Node.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/scene/control/Button.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/scene/Scene.java" />
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Interface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc;n#Interface#0" expanded="false" />
-            <element signature="method#start#0;class#Interface#0" expanded="false" />
-            <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
-            <element signature="e#4662#4834#0" expanded="false" />
-            <element signature="e#4868#5149#0" expanded="false" />
-            <element signature="e#5183#5356#0" expanded="false" />
-            <element signature="e#5387#5501#0" expanded="false" />
-            <element signature="e#5544#5791#0" expanded="false" />
-            <element signature="e#6093#6344#0" expanded="false" />
-            <element signature="e#6618#8257#0" expanded="false" />
-            <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
-            <marker date="1504094630620" expanded="false" signature="15205:15359" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15544:15946" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15988:17251" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="17339:17719" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19522:19801" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19857:20129" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="20256:21469" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="21499:21506" ph=" { " />
-            <marker date="1504094630620" expanded="false" signature="21582:21586" ph=" }" />
-            <marker date="1504094630620" expanded="false" signature="21649:21764" ph="{...}" />
+            <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+            <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1105,27 +1054,65 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc;n#Interface#0" expanded="false" />
-            <element signature="method#start#0;class#Interface#0" expanded="false" />
             <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
-            <element signature="e#4662#4834#0" expanded="false" />
-            <element signature="e#4868#5149#0" expanded="false" />
-            <element signature="e#5183#5356#0" expanded="false" />
-            <element signature="e#5387#5501#0" expanded="false" />
-            <element signature="e#5544#5791#0" expanded="false" />
-            <element signature="e#6093#6344#0" expanded="false" />
-            <element signature="e#6618#8257#0" expanded="false" />
+            <element signature="e#4790#4962#0" expanded="false" />
+            <element signature="e#4996#5473#0" expanded="false" />
+            <element signature="e#5507#5876#0" expanded="false" />
+            <element signature="e#5907#6021#0" expanded="false" />
+            <element signature="e#6228#6475#0" expanded="false" />
+            <element signature="e#6777#7028#0" expanded="false" />
+            <element signature="method#mainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="e#15087#15511#0" expanded="false" />
+            <element signature="e#15544#16270#0" expanded="false" />
+            <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+            <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+            <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
             <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
-            <marker date="1504094630620" expanded="false" signature="15205:15359" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15544:15946" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15988:17251" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="17339:17719" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19522:19801" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19857:20129" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="20256:21469" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="21499:21506" ph=" { " />
-            <marker date="1504094630620" expanded="false" signature="21582:21586" ph=" }" />
-            <marker date="1504094630620" expanded="false" signature="21649:21764" ph="{...}" />
+            <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+            <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/event/Event.java" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/scene/Node.java" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/scene/control/Button.java" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/scene/Scene.java" />
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Interface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
+            <element signature="e#4790#4962#0" expanded="false" />
+            <element signature="e#4996#5473#0" expanded="false" />
+            <element signature="e#5507#5876#0" expanded="false" />
+            <element signature="e#5907#6021#0" expanded="false" />
+            <element signature="e#6228#6475#0" expanded="false" />
+            <element signature="e#6777#7028#0" expanded="false" />
+            <element signature="method#mainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="e#15087#15511#0" expanded="false" />
+            <element signature="e#15544#16270#0" expanded="false" />
+            <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+            <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+            <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+            <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1166,64 +1153,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataBaseController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="14" column="69" lean-forward="false" selection-start-line="14" selection-start-column="69" selection-end-line="14" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/LabelComparator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#159#160#0" expanded="false" />
+            <element signature="e#214#215#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DataBaseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="17" column="1" lean-forward="true" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ORM.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="97" column="70" lean-forward="true" selection-start-line="97" selection-start-column="70" selection-end-line="97" selection-end-column="70" />
+        <state relative-caret-position="402">
+          <caret line="158" column="21" lean-forward="false" selection-start-line="158" selection-start-column="21" selection-end-line="158" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#add#0;class#ORM#0" expanded="false" />
             <element signature="method#readMessages#0;class#ORM#0" expanded="false" />
             <element signature="method#getLastId#0;class#ORM#0" expanded="false" />
+            <element signature="method#readContacts#0;class#ORM#0" expanded="false" />
             <element signature="method#checkMessages#0;class#ORM#0" expanded="false" />
             <element signature="method#checkAccount#0;class#ORM#0" expanded="false" />
             <element signature="method#fixConnection#0;class#ORM#0" expanded="false" />
+            <marker date="1504807951979" expanded="true" signature="5771:5971" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Interface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="315" column="34" lean-forward="true" selection-start-line="315" selection-start-column="34" selection-end-line="315" selection-end-column="34" />
+        <state relative-caret-position="89">
+          <caret line="43" column="57" lean-forward="false" selection-start-line="43" selection-start-column="57" selection-end-line="43" selection-end-column="57" />
           <folding>
-            <element signature="n#!!doc;n#Interface#0" expanded="false" />
-            <element signature="method#start#0;class#Interface#0" expanded="false" />
             <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
-            <element signature="e#4662#4834#0" expanded="false" />
-            <element signature="e#4868#5149#0" expanded="false" />
-            <element signature="e#5183#5356#0" expanded="false" />
-            <element signature="e#5387#5501#0" expanded="false" />
-            <element signature="e#5544#5791#0" expanded="false" />
-            <element signature="e#6093#6344#0" expanded="false" />
-            <element signature="e#6618#8257#0" expanded="false" />
+            <element signature="e#4790#4962#0" expanded="false" />
+            <element signature="e#4996#5473#0" expanded="false" />
+            <element signature="e#5507#5876#0" expanded="false" />
+            <element signature="e#5907#6021#0" expanded="false" />
+            <element signature="e#6228#6475#0" expanded="false" />
+            <element signature="e#6777#7028#0" expanded="false" />
+            <element signature="method#mainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="e#15087#15511#0" expanded="false" />
+            <element signature="e#15544#16270#0" expanded="false" />
+            <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+            <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+            <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
             <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
-            <marker date="1504094630620" expanded="false" signature="15205:15359" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15544:15946" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="15988:17251" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="17339:17719" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19522:19801" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="19857:20129" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="20256:21469" ph="{...}" />
-            <marker date="1504094630620" expanded="false" signature="21499:21506" ph=" { " />
-            <marker date="1504094630620" expanded="false" signature="21582:21586" ph=" }" />
-            <marker date="1504094630620" expanded="false" signature="21649:21764" ph="{...}" />
+            <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+            <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
           </folding>
         </state>
       </provider>

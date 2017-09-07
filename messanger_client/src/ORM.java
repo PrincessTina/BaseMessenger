@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import javax.sql.rowset.CachedRowSet;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeSet;
 
 class ORM {
@@ -137,15 +138,15 @@ class ORM {
     return rowArrayList;
   }
 
-  static ArrayList<String> checkMessagesFromOthers(String currentContact, int id) throws Exception {
+  static HashMap<String, Integer> checkMessagesFromOthers(String currentContact, int id) throws Exception {
     fixConnection();
 
-    ArrayList<String> labelsList = new ArrayList<>();
+    HashMap<String, Integer> labelsList = new HashMap<>();
     StringBuilder request = new StringBuilder();
     CachedRowSet resultSet = new CachedRowSetImpl();
     Statement statement = connection.createStatement();
 
-    request.append("select distinct login from messages inner join users on (id_who = users.id) where id_whose = (select id from users where login = '");
+    request.append("select login, max(messages.id) from messages inner join users on (id_who = users.id) where id_whose = (select id from users where login = '");
     request.append(Interface.userLogin);
     request.append("') and messages.id > ");
     request.append(id);
@@ -155,12 +156,12 @@ class ORM {
       request.append(currentContact);
       request.append("')");
     }
-    request.append(";");
+    request.append(" group by login;");
 
     resultSet.populate(statement.executeQuery(request.toString()));
 
     while (resultSet.next()) {
-      labelsList.add(resultSet.getString(1));
+      labelsList.put(resultSet.getString(1), resultSet.getInt(2));
     }
     return labelsList;
   }

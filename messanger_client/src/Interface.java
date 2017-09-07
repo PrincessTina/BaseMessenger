@@ -12,6 +12,7 @@ import javafx.scene.image.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.*;
 import javafx.stage.*;
 import javafx.scene.*;
@@ -23,9 +24,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 //ToDo: Попробовать переписать события для заголовков начального окна через css
-//ToDO: Неадекватный баг с сообщениями
 public class Interface extends Application {
   private boolean key;
+  private boolean isButtonFront = false;
   static String userLogin;
   private String currentContact = "null";
   private String lastSendingDate;
@@ -33,11 +34,11 @@ public class Interface extends Application {
   private HashMap<String, ArrayList<Row>> conversation = new HashMap<>();
   private int lastMessageOfCurrentContactId;
   private int lastMessageId = 0;
-  private boolean isButtonFront = false;
+  private int lineCount = 0;
+  private int count = 0;
 
   public void start(Stage stage) throws Exception {
     loginWindow(stage);
-    //mainWindow(stage);
   }
 
   private void loginWindow(Stage stage) throws Exception {
@@ -82,16 +83,19 @@ public class Interface extends Application {
     login.setPrefSize(380, 40);
     login.setPromptText("Введите логин");
     login.setFocusTraversable(false);
+    login.setId("blackBorder");
 
     PasswordField password1 = new PasswordField();
     password1.setPrefSize(380, 40);
     password1.setPromptText("Введите пароль");
     password1.setFocusTraversable(false);
+    password1.setId("blackBorder");
 
     PasswordField password2 = new PasswordField();
     password2.setPrefSize(380, 40);
     password2.setPromptText("Повторите пароль");
     password2.setFocusTraversable(false);
+    password2.setId("blackBorder");
 
     Button button = new Button("Вход");
     button.setFocusTraversable(false);
@@ -126,7 +130,7 @@ public class Interface extends Application {
     ObservableList<Node> list = vBox.getChildren();
     list.addAll(titleBox, loginBox, password1Box, button);
 
-    Scene scene = new Scene(vBox, 460, 340);
+    Scene scene = new Scene(vBox, 445, 340);
     scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
     stage.setScene(scene);
     stage.setResizable(false);
@@ -149,6 +153,8 @@ public class Interface extends Application {
         } else {
           button.setFocusTraversable(true);
         }
+      } else if (event.getCode().equals(KeyCode.ENTER)) {
+        entrance(password1List, loginList, password2List, password1, password2, login, tick1, cross1, tick2, cross2, tick, cross, stage);
       } else {
         removeExtraElement(password1List);
       }
@@ -157,6 +163,8 @@ public class Interface extends Application {
     password2.setOnKeyPressed(event -> {
       if (event.getCode().equals(KeyCode.TAB)) {
         button.setFocusTraversable(true);
+      } else if (event.getCode().equals(KeyCode.ENTER)) {
+        entrance(password1List, loginList, password2List, password1, password2, login, tick1, cross1, tick2, cross2, tick, cross, stage);
       } else {
         removeExtraElement(password2List);
       }
@@ -167,6 +175,8 @@ public class Interface extends Application {
         login.setFocusTraversable(true);
       }
     });
+
+    button.setOnAction(event -> entrance(password1List, loginList, password2List, password1, password2, login, tick1, cross1, tick2, cross2, tick, cross, stage));
 
     registrationText.setOnMouseClicked(event -> {
       if (!key) {
@@ -199,55 +209,6 @@ public class Interface extends Application {
 
     entranceText.setOnMouseExited(event -> entranceText.setEffect(new InnerShadow(
         BlurType.THREE_PASS_BOX, Color.color(0, 0, 0, 0.7), 6, 0.0, 0, 2)));
-
-    button.setOnAction(event -> {
-      int ticksCounter = 0;
-      try {
-        if (key) {
-          removeExtraElement(password1List, loginList, password2List);
-
-          if (password1.getText().length() > 0) {
-            password1List.add(tick1);
-            ticksCounter++;
-          } else {
-            password1List.add(cross1);
-          }
-
-          if ((Objects.equals(password1.getText(), password2.getText())) && (password2.getText().length() > 0)) {
-            password2List.add(tick2);
-            ticksCounter++;
-          } else {
-            password2List.add(cross2);
-          }
-
-          if ((login.getText().length() > 0) && (login.getText().length() < 35) &&
-              (!ORM.checkAccount("'" + login.getText() + "'"))) {
-            loginList.add(tick);
-            ticksCounter++;
-          } else {
-            loginList.add(cross);
-          }
-
-          if (ticksCounter == 3) {
-            ORM.add(login.getText(), password1.getText());
-            userLogin = login.getText();
-            mainWindow(stage);
-          }
-        } else if (!ORM.checkAccount("'" + login.getText() + "'", "'" + password1.getText() + "'")) {
-          removeExtraElement(password1List, loginList, password2List);
-          loginList.add(cross);
-          password1List.add(cross1);
-        } else {
-          userLogin = login.getText();
-          long startTime = System.currentTimeMillis();
-          mainWindow(stage);
-          long estimatedTime = System.currentTimeMillis() - startTime;
-          System.out.println(estimatedTime * 0.001);
-        }
-      } catch (Exception ex) {
-        System.out.println(ex.getMessage());
-      }
-    });
   }
 
   private void mainWindow(Stage stage) throws Exception {
@@ -307,8 +268,13 @@ public class Interface extends Application {
     button.toBack();
     StackPane.setMargin(button, new Insets(510, 200, 0, 250));
 
-    VBox contactsBox = new VBox();
-    ObservableList<Node> contactList = contactsBox.getChildren();
+    GridPane contactsBox = new GridPane();
+    ColumnConstraints column1 = new ColumnConstraints();
+    ColumnConstraints column2 = new ColumnConstraints();
+    column1.setPrefWidth(25);
+    column2.setPrefWidth(325);
+    contactsBox.getColumnConstraints().addAll(column1, column2);
+    contactsBox.setVgap(20);
 
     //Достаем все имеющиеся контакты
     contacts.addAll(ORM.readContacts(userLogin));
@@ -317,6 +283,7 @@ public class Interface extends Application {
       VBox.setMargin(label, new Insets(20, 20, 0, 20));
       label.setPrefWidth(300);
       label.setId("contact");
+      label.setAccessibleText("null");
 
       ArrayList<Row> rowArrayList = new ArrayList<>();
       rowArrayList.addAll(ORM.readMessages(label.getText()));
@@ -328,12 +295,13 @@ public class Interface extends Application {
         }
       }
 
-      label.setOnMouseClicked(subEvent -> setCurrentContact(label, messageList, messageScroll, button));
+      contactsBox.add(label, 1, lineCount);
+      lineCount++;
+
+      label.setOnMouseClicked(subEvent -> setCurrentContact(label, messageList, messageScroll, button, contactsBox));
       label.setOnMouseExited(subEvent -> contactOnMouseExited(label, false));
       label.setOnMouseEntered(subEvent -> contactOnMouseEntered(label));
     }
-
-    contactList.addAll(contacts);
 
     ScrollPane contactsScroll = new ScrollPane();
     contactsScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -416,17 +384,28 @@ public class Interface extends Application {
             }
           }
 
-          for (String contact : ORM.checkMessagesFromOthers(currentContact, lastMessageId)) {
-            ImageView cross = new ImageView(new Image(new FileInputStream("..\\Red X.png")));
-            cross.setFitHeight(30);
-            cross.setFitWidth(30);
-            cross.setEffect(new Lighting());
+          for (Map.Entry<String, Integer> contact : ORM.checkMessagesFromOthers(currentContact, lastMessageId).entrySet()) {
+            if (contact.getValue() > lastMessageId) {
+              lastMessageId = contact.getValue();
+            }
 
-            if (conversation.containsKey(contact)) {
-              System.out.println(contact);
-              contacts
+            if (conversation.containsKey(contact.getKey())) {
+              count = 0;
+
+              for (Label label : contacts) {
+                if (label.getText().equals(contact.getKey())) {
+                  Platform.runLater(() ->
+                      addCircle(contact.getKey(), contactsBox, count));
+                  break;
+                }
+                count++;
+              }
+              System.out.println(contact.getKey());
             } else {
-              System.out.println("new: " + contact);
+              Platform.runLater(() -> {
+                addCircle(contact.getKey(), contactsBox, lineCount);
+                addNewContact(contact.getKey(), contactsBox, button, messageScroll, messageList);
+              });
             }
           }
         } catch (Exception ex) {
@@ -442,11 +421,6 @@ public class Interface extends Application {
       button.toBack();
     });
 
-    someText.setOnMouseClicked(event -> {
-      for (int i = 0; i < conversation.get("lipton").size(); i++) {
-        System.out.println(conversation.get("lipton").get(i).getId());
-      }
-    });
     send.setOnMousePressed(event -> sendMessage(sendArea, messageList));
 
     send.setOnMouseReleased(event -> messageScroll.setVvalue(1));
@@ -456,7 +430,7 @@ public class Interface extends Application {
         double position, i = 1;
         for (Label label : contacts) {
           if (label.getText().equals(searchLine.getText())) {
-            setCurrentContact(label, messageList, messageScroll, button);
+            setCurrentContact(label, messageList, messageScroll, button, contactsBox);
             position = i;
             contactsScroll.setVvalue(position / contacts.size());
           }
@@ -471,26 +445,12 @@ public class Interface extends Application {
         if (event.getCode().equals(KeyCode.ENTER)) {
           if ((ORM.checkAccount("'" + addField.getText() + "'")) && (
               !contacts.contains(new Label(addField.getText()))) && (!addField.getText().equals(userLogin))) {
-
-            Label newContact = new Label(addField.getText());
-            newContact.setId("contact");
-            VBox.setMargin(newContact, new Insets(20, 20, 0, 20));
-            newContact.setPrefWidth(300);
-
-            ORM.add(addField.getText());
-            contacts.add(newContact);
-
-            contactList.clear();
-            contactList.addAll(contacts);
+            Label newContact = addNewContact(addField.getText(), contactsBox, button, messageScroll, messageList);
 
             addField.clear();
             addList.add(tick);
 
-            setCurrentContact(newContact, messageList, messageScroll, button);
-
-            newContact.setOnMouseClicked(subEvent -> setCurrentContact(newContact, messageList, messageScroll, button));
-            newContact.setOnMouseExited(subEvent -> contactOnMouseExited(newContact, false));
-            newContact.setOnMouseEntered(subEvent -> contactOnMouseEntered(newContact));
+            setCurrentContact(newContact, messageList, messageScroll, button, contactsBox);
           } else {
             addList.add(cross);
           }
@@ -499,6 +459,90 @@ public class Interface extends Application {
         System.out.println(ex.getMessage());
       }
     });
+  }
+
+  private void entrance(ObservableList<Node> password1List, ObservableList<Node> loginList, ObservableList<Node> password2List,
+                        PasswordField password1, PasswordField password2, TextField login, ImageView tick1, ImageView cross1,
+                        ImageView tick2, ImageView cross2, ImageView tick, ImageView cross, Stage stage) {
+    int ticksCounter = 0;
+    try {
+      if (key) {
+        removeExtraElement(password1List, loginList, password2List);
+
+        if (password1.getText().length() > 0) {
+          password1List.add(tick1);
+          ticksCounter++;
+        } else {
+          password1List.add(cross1);
+        }
+
+        if ((Objects.equals(password1.getText(), password2.getText())) && (password2.getText().length() > 0)) {
+          password2List.add(tick2);
+          ticksCounter++;
+        } else {
+          password2List.add(cross2);
+        }
+
+        if ((login.getText().length() > 0) && (login.getText().length() < 35) &&
+            (!ORM.checkAccount("'" + login.getText() + "'"))) {
+          loginList.add(tick);
+          ticksCounter++;
+        } else {
+          loginList.add(cross);
+        }
+
+        if (ticksCounter == 3) {
+          ORM.add(login.getText(), password1.getText());
+          userLogin = login.getText();
+          mainWindow(stage);
+        }
+      } else if (!ORM.checkAccount("'" + login.getText() + "'", "'" + password1.getText() + "'")) {
+        removeExtraElement(password1List, loginList, password2List);
+        loginList.add(cross);
+        password1List.add(cross1);
+      } else {
+        userLogin = login.getText();
+        long startTime = System.currentTimeMillis();
+        mainWindow(stage);
+        long estimatedTime = System.currentTimeMillis() - startTime;
+        System.out.println(estimatedTime * 0.001);
+      }
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
+    }
+  }
+
+  private void addCircle(String text, GridPane contactsBox, int digit) {
+    Circle circle = new Circle();
+    circle.setRadius(5);
+    circle.setCenterX(20);
+    circle.setFill(Color.web("#cb45b1"));
+    circle.setAccessibleText(text);
+
+    contactsBox.add(circle, 0, digit);
+  }
+
+  private Label addNewContact(String text, GridPane contactsBox, Button button, ScrollPane messageScroll, ObservableList<Node> messageList) {
+    Label newContact = new Label(text);
+    newContact.setId("contact");
+    newContact.setAccessibleText("null");
+    VBox.setMargin(newContact, new Insets(20, 20, 0, 20));
+    newContact.setPrefWidth(300);
+
+    try {
+      ORM.add(text);
+      contacts.add(newContact);
+
+      contactsBox.add(newContact, 1, lineCount);
+      lineCount++;
+
+      newContact.setOnMouseClicked(subEvent -> setCurrentContact(newContact, messageList, messageScroll, button, contactsBox));
+      newContact.setOnMouseExited(subEvent -> contactOnMouseExited(newContact, false));
+      newContact.setOnMouseEntered(subEvent -> contactOnMouseEntered(newContact));
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
+    }
+    return newContact;
   }
 
   private void sendMessage(TextArea sendArea, ObservableList<Node> messageList) {
@@ -537,6 +581,7 @@ public class Interface extends Application {
       if (keyISent) {
         if (keyNewMessage) {
           conversation.get(currentContact).add(new Row(ORM.getLastId(userLogin, currentContact), userLogin, messageText, dateText));
+          lastMessageId = ORM.getLastId(userLogin, currentContact);
         }
         message.setAlignment(Pos.TOP_CENTER);
         date.setAlignment(Pos.TOP_RIGHT);
@@ -574,7 +619,8 @@ public class Interface extends Application {
     }
   }
 
-  private void setCurrentContact(Label thisLabel, ObservableList<Node> messageList, ScrollPane messageScroll, Button button) {
+  private void setCurrentContact(Label thisLabel, ObservableList<Node> messageList, ScrollPane messageScroll,
+                                 Button button, GridPane contactsBox) {
     try {
       button.toBack();
 
@@ -586,6 +632,22 @@ public class Interface extends Application {
       currentContact = thisLabel.getText();
       thisLabel.setStyle("-fx-font-size: 20px; -fx-border-style: hidden hidden solid hidden;" +
           "-fx-text-fill: green; -fx-border-color: #A2F51D; -fx-font-family: \"Monotype Corsiva\", fantasy;");
+
+      //Удаляем значок нового сообщения
+      count = 1000;
+      for (Label label : contacts) {
+        if ((label.getText().equals(currentContact)) && (contactsBox.getChildren().size() > contacts.size())) {
+          for (int i = 0; i < contactsBox.getChildren().size(); i++) {
+            if (contactsBox.getChildren().get(i).getAccessibleText().equals(currentContact)) {
+              count = i;
+            }
+          }
+          if (count != 1000) {
+            contactsBox.getChildren().remove(count);
+            break;
+          }
+        }
+      }
 
       messageList.clear();
       ArrayList<Row> rowArrayList = new ArrayList<>();
