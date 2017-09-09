@@ -130,7 +130,10 @@ public class Interface extends Application {
     ObservableList<Node> list = vBox.getChildren();
     list.addAll(titleBox, loginBox, password1Box, button);
 
-    Scene scene = new Scene(vBox, 445, 340);
+    StackPane stackPane = new StackPane(new ImageView(new Image(new FileInputStream("..\\graphics-vegetables-788668.gif"))), vBox);
+    stackPane.getChildren().get(0).setVisible(false);
+
+    Scene scene = new Scene(stackPane, 445, 340);
     scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
     stage.setScene(scene);
     stage.setResizable(false);
@@ -154,7 +157,7 @@ public class Interface extends Application {
           button.setFocusTraversable(true);
         }
       } else if (event.getCode().equals(KeyCode.ENTER)) {
-        entrance(password1List, loginList, password2List, password1, password2, login, tick1, cross1, tick2, cross2, tick, cross, stage);
+        entrance(password1List, loginList, password2List, password1, password2, login, tick1, cross1, tick2, cross2, tick, cross, stage, stackPane);
       } else {
         removeExtraElement(password1List);
       }
@@ -164,7 +167,7 @@ public class Interface extends Application {
       if (event.getCode().equals(KeyCode.TAB)) {
         button.setFocusTraversable(true);
       } else if (event.getCode().equals(KeyCode.ENTER)) {
-        entrance(password1List, loginList, password2List, password1, password2, login, tick1, cross1, tick2, cross2, tick, cross, stage);
+        entrance(password1List, loginList, password2List, password1, password2, login, tick1, cross1, tick2, cross2, tick, cross, stage, stackPane);
       } else {
         removeExtraElement(password2List);
       }
@@ -176,7 +179,7 @@ public class Interface extends Application {
       }
     });
 
-    button.setOnAction(event -> entrance(password1List, loginList, password2List, password1, password2, login, tick1, cross1, tick2, cross2, tick, cross, stage));
+    button.setOnAction(event -> entrance(password1List, loginList, password2List, password1, password2, login, tick1, cross1, tick2, cross2, tick, cross, stage, stackPane));
 
     registrationText.setOnMouseClicked(event -> {
       if (!key) {
@@ -211,259 +214,9 @@ public class Interface extends Application {
         BlurType.THREE_PASS_BOX, Color.color(0, 0, 0, 0.7), 6, 0.0, 0, 2)));
   }
 
-  private void mainWindow(Stage stage) throws Exception {
-    ImageView cross = new ImageView(new Image(new FileInputStream("..\\Red X.png")));
-    cross.setFitHeight(30);
-    cross.setFitWidth(30);
-    cross.setEffect(new Lighting());
-
-    ImageView tick = new ImageView(new Image(new FileInputStream("..\\8240774.png")));
-    tick.setFitHeight(30);
-    tick.setFitWidth(30);
-    tick.setEffect(new Lighting());
-
-    Text text = new Text("Контакты");
-    text.setId("label");
-    Text column = new Text();
-    Text someText = new Text("Здесь должна быть ваша переписка");
-    someText.setId("label");
-
-    TextField searchLine = new TextField();
-    searchLine.setPromptText("Поиск...");
-    searchLine.setPrefHeight(15);
-    searchLine.setFocusTraversable(false);
-    searchLine.setEditable(true);
-    searchLine.setId("line");
-
-    TextField addField = new TextField();
-    addField.setPrefSize(300, 15);
-    addField.setPromptText("Добавить контакт...");
-    addField.setFocusTraversable(false);
-    addField.setId("line");
-
-    TextArea sendArea = new TextArea();
-    sendArea.setPrefSize(600, 80);
-    sendArea.setWrapText(true);
-    sendArea.setPromptText("Напишите сообщение...");
-    sendArea.setFocusTraversable(false);
-    sendArea.setId("blackBorder");
-
-    ImageView send = new ImageView(new Image(new FileInputStream("..\\6.png")));
-    send.setFitHeight(27);
-    send.setFitWidth(27);
-
-    VBox messageBox = new VBox();
-    ObservableList<Node> messageList = messageBox.getChildren();
-
-    ScrollPane messageScroll = new ScrollPane();
-    messageScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-    messageScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-    messageScroll.setContent(messageBox);
-    messageScroll.setPrefHeight(600);
-    messageScroll.setId("blackBorder");
-
-    Button button = new Button("Новое сообщение");
-
-    StackPane stackPane = new StackPane(messageScroll, button);
-    button.toBack();
-    StackPane.setMargin(button, new Insets(510, 200, 0, 250));
-
-    GridPane contactsBox = new GridPane();
-    ColumnConstraints column1 = new ColumnConstraints();
-    ColumnConstraints column2 = new ColumnConstraints();
-    column1.setPrefWidth(25);
-    column2.setPrefWidth(325);
-    contactsBox.getColumnConstraints().addAll(column1, column2);
-    contactsBox.setVgap(20);
-
-    //Достаем все имеющиеся контакты
-    contacts.addAll(ORM.readContacts(userLogin));
-
-    for (Label label : contacts) {
-      VBox.setMargin(label, new Insets(20, 20, 0, 20));
-      label.setPrefWidth(300);
-      label.setId("contact");
-      label.setAccessibleText("null");
-
-      ArrayList<Row> rowArrayList = new ArrayList<>();
-      rowArrayList.addAll(ORM.readMessages(label.getText()));
-      conversation.put(label.getText(), rowArrayList);
-
-      if (!rowArrayList.isEmpty()) {
-        if (rowArrayList.get(rowArrayList.size() - 1).getId() > lastMessageId) {
-          lastMessageId = rowArrayList.get(rowArrayList.size() - 1).getId();
-        }
-      }
-
-      contactsBox.add(label, 1, lineCount);
-      lineCount++;
-
-      label.setOnMouseClicked(subEvent -> setCurrentContact(label, messageList, messageScroll, button, contactsBox));
-      label.setOnMouseExited(subEvent -> contactOnMouseExited(label, false));
-      label.setOnMouseEntered(subEvent -> contactOnMouseEntered(label));
-    }
-
-    ScrollPane contactsScroll = new ScrollPane();
-    contactsScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-    contactsScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-    contactsScroll.setContent(contactsBox);
-    contactsScroll.setId("blackBorder");
-    contactsScroll.setPrefSize(350, 600);
-
-    HBox sendBox = new HBox(sendArea, send);
-    sendBox.setSpacing(20);
-
-    HBox addBox = new HBox(addField);
-    ObservableList<Node> addList = addBox.getChildren();
-    addBox.setSpacing(20);
-
-    VBox leftVBox = new VBox(text, searchLine, contactsScroll, addBox);
-    leftVBox.setSpacing(20);
-    leftVBox.setPadding(new Insets(20, 0, 20, 20));
-
-    VBox centerBox = new VBox(column);
-    centerBox.setPrefWidth(80);
-    centerBox.setPadding(new Insets(20, 0, 20, 0));
-    centerBox.setStyle("-fx-background-color: linear-gradient(#303030, #303030, #68b800, #a2f51d, #68b800, #303030, #303030)");
-
-    VBox rightVBox = new VBox(someText, stackPane, sendBox);
-    rightVBox.setSpacing(20);
-    rightVBox.setPadding(new Insets(20, 20, 20, 0));
-
-    HBox mainBox = new HBox(leftVBox, centerBox, rightVBox);
-    mainBox.setSpacing(5);
-
-    Scene scene = new Scene(mainBox, 1130, 740);
-    scene.getStylesheets().add(Main.class.getResource("style2.css").toExternalForm());
-    stage.setScene(scene);
-    stage.setTitle("Вход");
-    stage.show();
-
-    //Поток для ловли сообщений
-    Thread thread = new Thread(() -> {
-      ArrayList<Row> rowArrayList = new ArrayList<>();
-
-      while (stage.isShowing()) {
-        try {
-          if (!currentContact.equals("null")) {
-            if (conversation.containsKey(currentContact)) {
-              if (conversation.get(currentContact).size() > 0) {
-                lastMessageOfCurrentContactId = conversation.get(currentContact).get(conversation.get(currentContact).size() - 1).getId();
-              }
-            } else {
-              lastMessageOfCurrentContactId = 0;
-            }
-
-            rowArrayList.addAll(ORM.checkMessages(currentContact, lastMessageOfCurrentContactId));
-
-            if (rowArrayList.size() > 0) {
-              Platform.runLater(() -> {
-                for (Row row : rowArrayList) {
-                  if (row.getId() > lastMessageOfCurrentContactId) {
-                    addMessage(row.getMessage(), row.getDate(), messageList, false, true);
-                    conversation.get(currentContact).add(row);
-                  }
-                }
-                if ((messageScroll.getVvalue() != 1) && (!isButtonFront)) {
-                  button.toFront();
-                  isButtonFront = true;
-
-                  Thread thread1 = new Thread(() -> {
-                    while (stage.isShowing()) {
-                      if (messageScroll.getVvalue() == 1) {
-                        Platform.runLater(button::toBack);
-                        isButtonFront = false;
-                        break;
-                      }
-                    }
-                  });
-                  thread1.start();
-                }
-                rowArrayList.clear();
-              });
-            }
-          }
-
-          for (Map.Entry<String, Integer> contact : ORM.checkMessagesFromOthers(currentContact, lastMessageId).entrySet()) {
-            if (contact.getValue() > lastMessageId) {
-              lastMessageId = contact.getValue();
-            }
-
-            if (conversation.containsKey(contact.getKey())) {
-              count = 0;
-
-              for (Label label : contacts) {
-                if (label.getText().equals(contact.getKey())) {
-                  Platform.runLater(() ->
-                      addCircle(contact.getKey(), contactsBox, count));
-                  break;
-                }
-                count++;
-              }
-              System.out.println(contact.getKey());
-            } else {
-              Platform.runLater(() -> {
-                addCircle(contact.getKey(), contactsBox, lineCount);
-                addNewContact(contact.getKey(), contactsBox, button, messageScroll, messageList);
-              });
-            }
-          }
-        } catch (Exception ex) {
-          System.out.println(ex.getMessage());
-        }
-      }
-    });
-    thread.start();
-
-    //Events
-    button.setOnAction(event -> {
-      messageScroll.setVvalue(1.0);
-      button.toBack();
-    });
-
-    send.setOnMousePressed(event -> sendMessage(sendArea, messageList));
-
-    send.setOnMouseReleased(event -> messageScroll.setVvalue(1));
-
-    searchLine.setOnKeyReleased(event -> {
-      if (event.getCode().equals(KeyCode.ENTER)) {
-        double position, i = 1;
-        for (Label label : contacts) {
-          if (label.getText().equals(searchLine.getText())) {
-            setCurrentContact(label, messageList, messageScroll, button, contactsBox);
-            position = i;
-            contactsScroll.setVvalue(position / contacts.size());
-          }
-          i++;
-        }
-      }
-    });
-
-    addField.setOnKeyPressed(event -> {
-      try {
-        removeExtraElement(addList);
-        if (event.getCode().equals(KeyCode.ENTER)) {
-          if ((ORM.checkAccount("'" + addField.getText() + "'")) && (
-              !contacts.contains(new Label(addField.getText()))) && (!addField.getText().equals(userLogin))) {
-            Label newContact = addNewContact(addField.getText(), contactsBox, button, messageScroll, messageList);
-
-            addField.clear();
-            addList.add(tick);
-
-            setCurrentContact(newContact, messageList, messageScroll, button, contactsBox);
-          } else {
-            addList.add(cross);
-          }
-        }
-      } catch (Exception ex) {
-        System.out.println(ex.getMessage());
-      }
-    });
-  }
-
   private void entrance(ObservableList<Node> password1List, ObservableList<Node> loginList, ObservableList<Node> password2List,
                         PasswordField password1, PasswordField password2, TextField login, ImageView tick1, ImageView cross1,
-                        ImageView tick2, ImageView cross2, ImageView tick, ImageView cross, Stage stage) {
+                        ImageView tick2, ImageView cross2, ImageView tick, ImageView cross, Stage stage, StackPane stackPane) {
     int ticksCounter = 0;
     try {
       if (key) {
@@ -483,7 +236,7 @@ public class Interface extends Application {
           password2List.add(cross2);
         }
 
-        if ((login.getText().length() > 0) && (login.getText().length() < 35) &&
+        if ((login.getText().length() > 0) && (login.getText().length() < 30) &&
             (!ORM.checkAccount("'" + login.getText() + "'"))) {
           loginList.add(tick);
           ticksCounter++;
@@ -494,18 +247,288 @@ public class Interface extends Application {
         if (ticksCounter == 3) {
           ORM.add(login.getText(), password1.getText());
           userLogin = login.getText();
-          mainWindow(stage);
+          functionalForMainWindow();
+          paintingMainWindow(stage, cross, tick);
         }
       } else if (!ORM.checkAccount("'" + login.getText() + "'", "'" + password1.getText() + "'")) {
         removeExtraElement(password1List, loginList, password2List);
         loginList.add(cross);
         password1List.add(cross1);
       } else {
+        removeExtraElement(password1List, loginList, password2List);
+        loginList.add(tick);
+        password1List.add(tick1);
+
         userLogin = login.getText();
+
+        stackPane.getChildren().get(1).setDisable(true);
+        stackPane.getChildren().get(0).setVisible(true);
+        stackPane.getChildren().get(0).toFront();
+
         long startTime = System.currentTimeMillis();
-        mainWindow(stage);
-        long estimatedTime = System.currentTimeMillis() - startTime;
-        System.out.println(estimatedTime * 0.001);
+        Runnable expensiveTask = () -> {
+          functionalForMainWindow();
+          Platform.runLater(() -> paintingMainWindow(stage, cross, tick));
+          System.out.println((System.currentTimeMillis() - startTime) * 0.001);
+        };
+        new Thread(expensiveTask).start();
+      }
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
+    }
+  }
+
+  private void paintingMainWindow(Stage stage, ImageView cross, ImageView tick) {
+    try {
+      Text text = new Text("Контакты");
+      text.setId("label");
+      Text column = new Text();
+      Text someText = new Text("Здесь должна быть ваша переписка");
+      someText.setId("label");
+
+      TextField searchLine = new TextField();
+      searchLine.setPromptText("Поиск...");
+      searchLine.setPrefHeight(15);
+      searchLine.setFocusTraversable(false);
+      searchLine.setEditable(true);
+      searchLine.setId("line");
+
+      TextField addField = new TextField();
+      addField.setPrefSize(300, 15);
+      addField.setPromptText("Добавить контакт...");
+      addField.setFocusTraversable(false);
+      addField.setId("line");
+
+      TextArea sendArea = new TextArea();
+      sendArea.setPrefSize(600, 80);
+      sendArea.setWrapText(true);
+      sendArea.setPromptText("Напишите сообщение...");
+      sendArea.setFocusTraversable(false);
+      sendArea.setId("line");
+
+      ImageView send = new ImageView(new Image(new FileInputStream("..\\6.png")));
+      send.setFitHeight(27);
+      send.setFitWidth(27);
+
+      VBox messageBox = new VBox();
+      ObservableList<Node> messageList = messageBox.getChildren();
+
+      ScrollPane messageScroll = new ScrollPane();
+      messageScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+      messageScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+      messageScroll.setContent(messageBox);
+      messageScroll.setPrefHeight(600);
+      messageScroll.setId("blackBorder");
+
+      Button button = new Button("Новое сообщение");
+
+      StackPane stackPane2 = new StackPane(messageScroll, button);
+      button.toBack();
+      StackPane.setMargin(button, new Insets(510, 200, 0, 250));
+
+      GridPane contactsBox = new GridPane();
+      ColumnConstraints column1 = new ColumnConstraints();
+      ColumnConstraints column2 = new ColumnConstraints();
+      ColumnConstraints column3 = new ColumnConstraints();
+      column1.setPrefWidth(50);
+      column2.setPrefWidth(325);
+      column3.setPrefWidth(25);
+      contactsBox.getColumnConstraints().addAll(column1, column2, column3);
+      contactsBox.setVgap(20);
+
+      //Прорисовываем контакты
+      for (Label label : contacts) {
+        VBox.setMargin(label, new Insets(20, 5, 0, 20));
+        label.setPrefWidth(300);
+        label.setId("contact");
+        label.setAccessibleText("null");
+
+        label.setOnMouseClicked(subEvent -> setCurrentContact(label, messageList, messageScroll, button, contactsBox));
+        label.setOnMouseExited(subEvent -> contactOnMouseExited(label, false));
+        label.setOnMouseEntered(subEvent -> contactOnMouseEntered(label));
+
+        ImageView imageView = new ImageView(new Image(new FileInputStream(randomPicture())));
+        imageView.setFitHeight(40);
+        imageView.setFitWidth(40);
+        imageView.setAccessibleText("null");
+
+        contactsBox.add(label, 1, lineCount);
+        contactsBox.add(imageView, 0, lineCount);
+        lineCount++;
+      }
+
+      ScrollPane contactsScroll = new ScrollPane();
+      contactsScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+      contactsScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+      contactsScroll.setContent(contactsBox);
+      contactsScroll.setId("blackBorder");
+      contactsScroll.setPrefSize(400, 600);
+
+      HBox sendBox = new HBox(sendArea, send);
+      sendBox.setSpacing(20);
+
+      HBox addBox = new HBox(addField);
+      ObservableList<Node> addList = addBox.getChildren();
+      addBox.setSpacing(20);
+
+      VBox leftVBox = new VBox(text, searchLine, contactsScroll, addBox);
+      leftVBox.setSpacing(20);
+      leftVBox.setPadding(new Insets(20, 0, 20, 20));
+
+      VBox centerBox = new VBox(column);
+      centerBox.setPrefWidth(80);
+      centerBox.setPadding(new Insets(20, 0, 20, 0));
+      centerBox.setStyle("-fx-background-color: linear-gradient(#303030, #303030, #68b800, #a2f51d, #68b800, #303030, #303030)");
+
+      VBox rightVBox = new VBox(someText, stackPane2, sendBox);
+      rightVBox.setSpacing(20);
+      rightVBox.setPadding(new Insets(20, 20, 20, 0));
+
+      HBox mainBox = new HBox(leftVBox, centerBox, rightVBox);
+      mainBox.setSpacing(5);
+
+      Scene scene = new Scene(mainBox, 1180, 740);
+      scene.getStylesheets().add(Main.class.getResource("style2.css").toExternalForm());
+      stage.setScene(scene);
+      stage.show();
+
+      //Events
+      button.setOnAction(event -> {
+        messageScroll.setVvalue(1.0);
+        button.toBack();
+      });
+
+      send.setOnMousePressed(event -> sendMessage(sendArea, messageList));
+
+      send.setOnMouseReleased(event -> messageScroll.setVvalue(1));
+
+      searchLine.setOnKeyReleased(event -> {
+        if (event.getCode().equals(KeyCode.ENTER)) {
+          double position, i = 1;
+          for (Label label2 : contacts) {
+            if (label2.getText().equals(searchLine.getText())) {
+              setCurrentContact(label2, messageList, messageScroll, button, contactsBox);
+              position = i;
+              contactsScroll.setVvalue(position / contacts.size());
+            }
+            i++;
+          }
+        }
+      });
+
+      addField.setOnKeyPressed(event -> {
+        try {
+          removeExtraElement(addList);
+          if (event.getCode().equals(KeyCode.ENTER)) {
+            if ((ORM.checkAccount("'" + addField.getText() + "'")) && (
+                !contacts.contains(new Label(addField.getText()))) && (!addField.getText().equals(userLogin))) {
+              Label newContact = addNewContact(addField.getText(), contactsBox, button, messageScroll, messageList);
+
+              addField.clear();
+              addList.add(tick);
+
+              setCurrentContact(newContact, messageList, messageScroll, button, contactsBox);
+            } else {
+              addList.add(cross);
+            }
+          }
+        } catch (Exception ex) {
+          System.out.println(ex.getMessage());
+        }
+      });
+
+      //Поток для ловли сообщений
+      Thread thread = new Thread(() -> {
+        ArrayList<Row> rowArrayList = new ArrayList<>();
+
+        while (stage.isShowing()) {
+          try {
+            if (!currentContact.equals("null")) {
+              if (conversation.containsKey(currentContact)) {
+                if (conversation.get(currentContact).size() > 0) {
+                  lastMessageOfCurrentContactId = conversation.get(currentContact).get(conversation.get(currentContact).size() - 1).getId();
+                }
+              } else {
+                lastMessageOfCurrentContactId = 0;
+              }
+
+              rowArrayList.addAll(ORM.checkMessages(currentContact, lastMessageOfCurrentContactId));
+
+              if (rowArrayList.size() > 0) {
+                Platform.runLater(() -> {
+                  for (Row row : rowArrayList) {
+                    if (row.getId() > lastMessageOfCurrentContactId) {
+                      addMessage(row.getMessage(), row.getDate(), messageList, false, true);
+                      conversation.get(currentContact).add(row);
+                      lastMessageId = row.getId();
+                    }
+                  }
+                  if ((messageScroll.getVvalue() != 1) && (conversation.get(currentContact).size() > 9) && (!isButtonFront)) {
+                    button.toFront();
+                    isButtonFront = true;
+
+                    Thread thread1 = new Thread(() -> {
+                      while (stage.isShowing()) {
+                        if (messageScroll.getVvalue() == 1) {
+                          Platform.runLater(button::toBack);
+                          isButtonFront = false;
+                          break;
+                        }
+                      }
+                    });
+                    thread1.start();
+                  }
+                  rowArrayList.clear();
+                });
+              }
+            }
+
+            for (Map.Entry<String, Integer> contact : ORM.checkMessagesFromOthers(currentContact, lastMessageId).entrySet()) {
+              if (contact.getValue() > lastMessageId) {
+                lastMessageId = contact.getValue();
+              }
+
+              if (conversation.containsKey(contact.getKey())) {
+                count = 0;
+
+                for (Label label : contacts) {
+                  if (label.getText().equals(contact.getKey())) {
+                    Platform.runLater(() ->
+                        addCircle(contact.getKey(), contactsBox, count));
+                    break;
+                  }
+                  count++;
+                }
+              } else {
+                Platform.runLater(() -> addNewContact(contact.getKey(), contactsBox, button, messageScroll, messageList));
+              }
+            }
+          } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+          }
+        }
+      });
+      thread.start();
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
+    }
+  }
+
+  private void functionalForMainWindow() {
+    try {
+      //Достаем все имеющиеся контакты
+      contacts.addAll(ORM.readContacts(userLogin));
+
+      for (Label label : contacts) {
+        ArrayList<Row> rowArrayList = new ArrayList<>();
+        rowArrayList.addAll(ORM.readMessages(label.getText()));
+        conversation.put(label.getText(), rowArrayList);
+
+        if (!rowArrayList.isEmpty()) {
+          if (rowArrayList.get(rowArrayList.size() - 1).getId() > lastMessageId) {
+            lastMessageId = rowArrayList.get(rowArrayList.size() - 1).getId();
+          }
+        }
       }
     } catch (Exception ex) {
       System.out.println(ex.getMessage());
@@ -519,7 +542,7 @@ public class Interface extends Application {
     circle.setFill(Color.web("#cb45b1"));
     circle.setAccessibleText(text);
 
-    contactsBox.add(circle, 0, digit);
+    contactsBox.add(circle, 2, digit);
   }
 
   private Label addNewContact(String text, GridPane contactsBox, Button button, ScrollPane messageScroll, ObservableList<Node> messageList) {
@@ -529,20 +552,82 @@ public class Interface extends Application {
     VBox.setMargin(newContact, new Insets(20, 20, 0, 20));
     newContact.setPrefWidth(300);
 
+    newContact.setOnMouseClicked(subEvent -> setCurrentContact(newContact, messageList, messageScroll, button, contactsBox));
+    newContact.setOnMouseExited(subEvent -> contactOnMouseExited(newContact, false));
+    newContact.setOnMouseEntered(subEvent -> contactOnMouseEntered(newContact));
+
+    ArrayList<String> arrayList = new ArrayList<>();
+    arrayList.add(newContact.getText());
+    count = 0;
+    lineCount = 0;
+
     try {
       ORM.add(text);
       contacts.add(newContact);
+      conversation.put(newContact.getText(), new ArrayList<>());
 
-      contactsBox.add(newContact, 1, lineCount);
-      lineCount++;
+      for (int i = 0; i < contactsBox.getChildren().size(); i++) {
+        if (!contactsBox.getChildren().get(i).getAccessibleText().equals("null")) {
+          arrayList.add(contactsBox.getChildren().get(i).getAccessibleText());
+        }
+      }
 
-      newContact.setOnMouseClicked(subEvent -> setCurrentContact(newContact, messageList, messageScroll, button, contactsBox));
-      newContact.setOnMouseExited(subEvent -> contactOnMouseExited(newContact, false));
-      newContact.setOnMouseEntered(subEvent -> contactOnMouseEntered(newContact));
+      contactsBox.getChildren().clear();
+
+      for (Label label : contacts) {
+        ImageView imageView = new ImageView(new Image(new FileInputStream(randomPicture())));
+        imageView.setFitHeight(40);
+        imageView.setFitWidth(40);
+        imageView.setAccessibleText("null");
+
+        contactsBox.add(label, 1, lineCount);
+        contactsBox.add(imageView, 0, lineCount);
+        lineCount++;
+      }
+
+      if (arrayList.size() != 0) {
+        for (String contact : arrayList) {
+          for (Label label : contacts) {
+            if (label.getText().equals(contact)) {
+              addCircle(contact, contactsBox, count);
+              break;
+            }
+            count++;
+          }
+          count = 0;
+        }
+      }
     } catch (Exception ex) {
       System.out.println(ex.getMessage());
     }
     return newContact;
+  }
+
+  private String randomPicture() {
+    Random random = new Random();
+    String url;
+
+    switch (random.nextInt(6)) {
+      case 1:
+        url = "..\\circle1.png";
+        break;
+      case 2:
+        url = "..\\circle2.png";
+        break;
+      case 3:
+        url = "..\\balloon.png";
+        break;
+      case 4:
+        url = "..\\mill.png";
+        break;
+      case 5:
+        url = "..\\squirrel.png";
+        break;
+      default:
+        url = "..\\circle.png";
+    }
+
+    return url;
   }
 
   private void sendMessage(TextArea sendArea, ObservableList<Node> messageList) {
@@ -607,14 +692,14 @@ public class Interface extends Application {
 
   private void contactOnMouseExited(Label thisLabel, boolean key) {
     if ((!thisLabel.getText().equals(currentContact)) || key) {
-      thisLabel.setStyle("-fx-font-size: 20px; -fx-border-style: hidden hidden solid hidden;" +
+      thisLabel.setStyle("-fx-font-size: 22px; -fx-border-style: hidden hidden solid hidden;" +
           "-fx-border-color: #262626; -fx-font-family: \"Monotype Corsiva\", serif; -fx-text-fill: black");
     }
   }
 
   private void contactOnMouseEntered(Label thisLabel) {
     if (!thisLabel.getText().equals(currentContact)) {
-      thisLabel.setStyle("-fx-font-size: 20px; -fx-border-style: hidden hidden solid hidden;" +
+      thisLabel.setStyle("-fx-font-size: 22px; -fx-border-style: hidden hidden solid hidden;" +
           "-fx-border-color: #cb45b1; -fx-font-family: \"Monotype Corsiva\", serif; -fx-text-fill: #96127d");
     }
   }
@@ -630,22 +715,20 @@ public class Interface extends Application {
         }
       }
       currentContact = thisLabel.getText();
-      thisLabel.setStyle("-fx-font-size: 20px; -fx-border-style: hidden hidden solid hidden;" +
+      thisLabel.setStyle("-fx-font-size: 22px; -fx-border-style: hidden hidden solid hidden;" +
           "-fx-text-fill: green; -fx-border-color: #A2F51D; -fx-font-family: \"Monotype Corsiva\", fantasy;");
 
       //Удаляем значок нового сообщения
       count = 1000;
-      for (Label label : contacts) {
-        if ((label.getText().equals(currentContact)) && (contactsBox.getChildren().size() > contacts.size())) {
-          for (int i = 0; i < contactsBox.getChildren().size(); i++) {
-            if (contactsBox.getChildren().get(i).getAccessibleText().equals(currentContact)) {
-              count = i;
-            }
+
+      if (contactsBox.getChildren().size() > contacts.size()) {
+        for (int i = 0; i < contactsBox.getChildren().size(); i++) {
+          if (contactsBox.getChildren().get(i).getAccessibleText().equals(currentContact)) {
+            count = i;
           }
-          if (count != 1000) {
-            contactsBox.getChildren().remove(count);
-            break;
-          }
+        }
+        if (count != 1000) {
+          contactsBox.getChildren().remove(count);
         }
       }
 
@@ -667,7 +750,7 @@ public class Interface extends Application {
         }
       }
 
-      Platform.runLater(() -> messageScroll.setVvalue(1));
+      messageScroll.setVvalue(1);
     } catch (Exception ex) {
       System.out.println(ex.getMessage());
     }

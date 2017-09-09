@@ -75,27 +75,6 @@ class ORM {
     return searchedList;
   }
 
-  static int getLastId(String login_who, String login_whose) throws Exception {
-    fixConnection();
-
-    int id = 0;
-    StringBuilder request = new StringBuilder();
-    CachedRowSet resultSet = new CachedRowSetImpl();
-    Statement statement = connection.createStatement();
-
-    request.append("select id from messages where id_who = (select id from users where login = '");
-    request.append(login_who);
-    request.append("') and id_whose = (select id from users where login = '");
-    request.append(login_whose);
-    request.append("') order by id desc limit 1;");
-
-    resultSet.populate(statement.executeQuery(request.toString()));
-    while (resultSet.next()) {
-      id = resultSet.getInt(1);
-    }
-    return id;
-  }
-
   static TreeSet<Label> readContacts(String myLogin) throws Exception {
     fixConnection();
 
@@ -193,6 +172,27 @@ class ORM {
         answer = false;
     }
     return answer;
+  }
+
+  static int getLastId(String login_who, String login_whose) throws Exception {
+    fixConnection();
+
+    int id = 0;
+    StringBuilder request = new StringBuilder();
+    CachedRowSet resultSet = new CachedRowSetImpl();
+    Statement statement = connection.createStatement();
+
+    request.append("select id from messages where id_who = (select id from users where login = '");
+    request.append(login_who);
+    request.append("') and id_whose = (select id from users where login = '");
+    request.append(login_whose);
+    request.append("') order by id desc limit 1;");
+
+    resultSet.populate(statement.executeQuery(request.toString()));
+    while (resultSet.next()) {
+      id = resultSet.getInt(1);
+    }
+    return id;
   }
 
   private static void fixConnection() throws Exception {
