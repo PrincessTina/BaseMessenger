@@ -29,7 +29,7 @@ class ORM {
         request.append("insert into users(login, password) values('");
         request.append(args[0]);
         request.append("', '");
-        request.append(args[1]);
+        request.append(cipher(args[1]));
         request.append("');");
         break;
 
@@ -40,7 +40,7 @@ class ORM {
         request.append("'), (select id from users where login = '");
         request.append(args[0]);
         request.append("'), '");
-        request.append(args[1]);
+        request.append(cipher(args[1]));
         request.append("', '");
         request.append(args[2]);
         request.append("');");
@@ -70,7 +70,7 @@ class ORM {
     resultSet.populate(statement.executeQuery(request.toString()));
     while (resultSet.next()) {
       searchedList.add(new Row(resultSet.getInt(1), resultSet.getString(2),
-          resultSet.getString(3), resultSet.getString(4)));
+          transcript(resultSet.getString(3)), resultSet.getString(4)));
     }
     return searchedList;
   }
@@ -112,7 +112,8 @@ class ORM {
     resultSet.populate(statement.executeQuery(request.toString()));
 
     while (resultSet.next()) {
-      rowArrayList.add(new Row(resultSet.getInt(1), currentContact, resultSet.getString(4), resultSet.getString(5)));
+      rowArrayList.add(new Row(resultSet.getInt(1), currentContact,
+          transcript(resultSet.getString(4)), resultSet.getString(5)));
     }
     return rowArrayList;
   }
@@ -153,12 +154,14 @@ class ORM {
     CachedRowSet resultSet = new CachedRowSetImpl();
     Statement statement = connection.createStatement();
 
-    builder.append("select 1 from users where login = ");
+    builder.append("select 1 from users where login = '");
     builder.append(args[0]);
+    builder.append("'");
 
     if (args.length > 1) {
-      builder.append(" and password = ");
-      builder.append(args[1]);
+      builder.append(" and password = '");
+      builder.append(cipher(args[1]));
+      builder.append("'");
     }
     builder.append(";");
 
@@ -193,6 +196,27 @@ class ORM {
       id = resultSet.getInt(1);
     }
     return id;
+  }
+
+  private static String cipher(String basicString) {
+    StringBuilder searchedString = new StringBuilder();
+
+    for (int i = 0; i < basicString.length(); i++) {
+      int digit = (basicString.charAt(i) + 874)*3 - 10;
+
+      searchedString.append(digit);
+      searchedString.append(" ");
+    }
+    return searchedString.toString();
+  }
+
+  private static String transcript(String basicString) {
+    StringBuilder searchedString = new StringBuilder();
+
+    for (String digit: basicString.split(" ")) {
+      searchedString.append(Character.toString((char)((Integer.parseInt(digit) + 10)/3 - 874)));
+    }
+    return searchedString.toString();
   }
 
   private static void fixConnection() throws Exception {

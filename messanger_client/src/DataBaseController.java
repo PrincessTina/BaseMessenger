@@ -12,7 +12,7 @@ class DataBaseController {
     dataSource.setServerName("188.166.39.53");
     dataSource.setPortNumber(5432);
 
-    connection = dataSource.getConnection("tina", "abjktnjdsq`;br1999");
+    connection = dataSource.getConnection("tina", "");
     return connection;
   }
 }

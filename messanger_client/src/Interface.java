@@ -237,7 +237,7 @@ public class Interface extends Application {
         }
 
         if ((login.getText().length() > 0) && (login.getText().length() < 30) &&
-            (!ORM.checkAccount("'" + login.getText() + "'"))) {
+            (!ORM.checkAccount(login.getText()))) {
           loginList.add(tick);
           ticksCounter++;
         } else {
@@ -250,7 +250,7 @@ public class Interface extends Application {
           functionalForMainWindow();
           paintingMainWindow(stage, cross, tick);
         }
-      } else if (!ORM.checkAccount("'" + login.getText() + "'", "'" + password1.getText() + "'")) {
+      } else if (!ORM.checkAccount(login.getText(), password1.getText())) {
         removeExtraElement(password1List, loginList, password2List);
         loginList.add(cross);
         password1List.add(cross1);
@@ -404,15 +404,7 @@ public class Interface extends Application {
 
       searchLine.setOnKeyReleased(event -> {
         if (event.getCode().equals(KeyCode.ENTER)) {
-          double position, i = 1;
-          for (Label label2 : contacts) {
-            if (label2.getText().equals(searchLine.getText())) {
-              setCurrentContact(label2, messageList, messageScroll, button, contactsBox);
-              position = i;
-              contactsScroll.setVvalue(position / contacts.size());
-            }
-            i++;
-          }
+          rewindToContact(messageList, messageScroll, button, contactsBox, contactsScroll, true, searchLine.getText());
         }
       });
 
@@ -420,7 +412,7 @@ public class Interface extends Application {
         try {
           removeExtraElement(addList);
           if (event.getCode().equals(KeyCode.ENTER)) {
-            if ((ORM.checkAccount("'" + addField.getText() + "'")) && (
+            if ((ORM.checkAccount(addField.getText())) && (
                 !contacts.contains(new Label(addField.getText()))) && (!addField.getText().equals(userLogin))) {
               Label newContact = addNewContact(addField.getText(), contactsBox, button, messageScroll, messageList);
 
@@ -493,14 +485,19 @@ public class Interface extends Application {
 
                 for (Label label : contacts) {
                   if (label.getText().equals(contact.getKey())) {
-                    Platform.runLater(() ->
-                        addCircle(contact.getKey(), contactsBox, count));
+                    Platform.runLater(() -> {
+                      addCircle(contact.getKey(), contactsBox, count);
+                      rewindToContact(messageList, messageScroll, button, contactsBox, contactsScroll, false, contact.getKey());
+                    });
                     break;
                   }
                   count++;
                 }
               } else {
-                Platform.runLater(() -> addNewContact(contact.getKey(), contactsBox, button, messageScroll, messageList));
+                Platform.runLater(() -> {
+                  addNewContact(contact.getKey(), contactsBox, button, messageScroll, messageList);
+                  rewindToContact(messageList, messageScroll, button, contactsBox, contactsScroll, false, contact.getKey());
+                });
               }
             }
           } catch (Exception ex) {
@@ -511,6 +508,22 @@ public class Interface extends Application {
       thread.start();
     } catch (Exception ex) {
       System.out.println(ex.getMessage());
+    }
+  }
+
+  private void rewindToContact(ObservableList<Node> messageList, ScrollPane messageScroll, Button button,
+                               GridPane contactsBox, ScrollPane contactsScroll, boolean doCurrentContact, String text) {
+    double position, i = 1;
+    for (Label label : contacts) {
+      if (label.getText().contains(text)) {
+        if (doCurrentContact) {
+          setCurrentContact(label, messageList, messageScroll, button, contactsBox);
+        }
+        position = i;
+        contactsScroll.setVvalue(position / contacts.size());
+        break;
+      }
+      i++;
     }
   }
 
