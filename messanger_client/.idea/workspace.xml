@@ -30,9 +30,27 @@
       <file leaf-file-name="Interface.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Interface.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="401" column="42" lean-forward="false" selection-start-line="401" selection-start-column="42" selection-end-line="401" selection-end-column="42" />
-              <folding />
+            <state relative-caret-position="532">
+              <caret line="49" column="14" lean-forward="true" selection-start-line="49" selection-start-column="14" selection-end-line="49" selection-end-column="14" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#main#0;class#Interface#0" expanded="false" />
+                <element signature="method#start#0;class#Interface#0" expanded="false" />
+                <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
+                <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+                <element signature="method#paintingMainWindow#0;class#Interface#0" expanded="false" />
+                <element signature="method#rewindToContact#0;class#Interface#0" expanded="false" />
+                <element signature="method#functionalForMainWindow#0;class#Interface#0" expanded="false" />
+                <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+                <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+                <element signature="method#randomPicture#0;class#Interface#0" expanded="false" />
+                <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
+                <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
+                <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+                <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+                <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+                <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -40,7 +58,7 @@
       <file leaf-file-name="ORM.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ORM.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
+            <state relative-caret-position="420">
               <caret line="120" column="106" lean-forward="false" selection-start-line="120" selection-start-column="106" selection-end-line="120" selection-end-column="106" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -74,7 +92,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="231">
               <caret line="14" column="47" lean-forward="false" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -84,7 +104,11 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="42">
               <caret line="4" column="6" lean-forward="false" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#159#160#0" expanded="false" />
+                <element signature="e#214#215#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -113,7 +137,27 @@
       <find>stackPane</find>
       <find>checkAc</find>
       <find>checkAccount</find>
+      <find>FileInputStream</find>
+      <find>юю</find>
+      <find>ю</find>
+      <find>..</find>
+      <find>.\.</find>
+      <find>\.\.</find>
+      <find>\..</find>
+      <find>\.</find>
+      <find>.ёё</find>
+      <find>.ё</find>
+      <find>.</find>
+      <find>.\</find>
+      <find>.\\</find>
+      <find>.\\\</find>
+      <find>.\\\\</find>
     </findStrings>
+    <replaceStrings>
+      <replace />
+      <replace>.\\pictures\\</replace>
+      <replace>.\\\\pictures\\\\</replace>
+    </replaceStrings>
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -152,10 +196,10 @@
     <treeState />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="1938" />
-    <option name="height" value="1048" />
+    <option name="x" value="2" />
+    <option name="y" value="1" />
+    <option name="width" value="1917" />
+    <option name="height" value="1030" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -174,6 +218,7 @@
     <panes>
       <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -202,13 +247,12 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/squirrel.png" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
@@ -670,14 +714,15 @@
       <workItem from="1503162606092" duration="21357000" />
       <workItem from="1504801102718" duration="62399000" />
       <workItem from="1505045016390" duration="1088000" />
+      <workItem from="1505048955575" duration="2813000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="380498000" />
+    <option name="totallyTimeSpent" value="383311000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <frame x="2" y="1" width="1917" height="1030" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -690,13 +735,14 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17343578" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17343578" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17318435" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22083333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22064245" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960895" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -708,7 +754,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -791,7 +836,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
           <caret line="10" column="32" lean-forward="false" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -799,7 +846,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#159#160#0" expanded="false" />
+            <element signature="e#214#215#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -807,18 +858,29 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9933">
           <caret line="473" column="91" lean-forward="false" selection-start-line="473" selection-start-column="91" selection-end-line="473" selection-end-column="91" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#main#0;class#Interface#0" expanded="false" />
+            <element signature="method#start#0;class#Interface#0" expanded="false" />
+            <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+            <element signature="method#paintingMainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#rewindToContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#functionalForMainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+            <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#randomPicture#0;class#Interface#0" expanded="false" />
+            <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+            <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="6" column="34" lean-forward="false" selection-start-line="6" selection-start-column="34" selection-end-line="6" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java" />
     <entry file="file://$PROJECT_DIR$/src/ORM.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1596">
@@ -851,7 +913,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
           <caret line="10" column="32" lean-forward="false" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -859,7 +923,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#159#160#0" expanded="false" />
+            <element signature="e#214#215#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -867,18 +935,29 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5544">
           <caret line="264" column="14" lean-forward="false" selection-start-line="264" selection-start-column="14" selection-end-line="264" selection-end-column="14" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#main#0;class#Interface#0" expanded="false" />
+            <element signature="method#start#0;class#Interface#0" expanded="false" />
+            <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+            <element signature="method#paintingMainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#rewindToContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#functionalForMainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+            <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#randomPicture#0;class#Interface#0" expanded="false" />
+            <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+            <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="7" column="40" lean-forward="false" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java" />
     <entry file="file://$PROJECT_DIR$/src/ORM.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1785">
@@ -904,7 +983,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
           <caret line="10" column="32" lean-forward="false" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -912,7 +993,25 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
           <caret line="7" column="27" lean-forward="false" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#main#0;class#Interface#0" expanded="false" />
+            <element signature="method#start#0;class#Interface#0" expanded="false" />
+            <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+            <element signature="method#paintingMainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#rewindToContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#functionalForMainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+            <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#randomPicture#0;class#Interface#0" expanded="false" />
+            <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+            <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -920,7 +1019,25 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#main#0;class#Interface#0" expanded="false" />
+            <element signature="method#start#0;class#Interface#0" expanded="false" />
+            <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+            <element signature="method#paintingMainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#rewindToContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#functionalForMainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+            <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#randomPicture#0;class#Interface#0" expanded="false" />
+            <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+            <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -928,19 +1045,30 @@
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/scene/Node.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/scene/control/Button.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/scene/Scene.java" />
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java" />
     <entry file="file://$PROJECT_DIR$/src/Interface.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#main#0;class#Interface#0" expanded="false" />
+            <element signature="method#start#0;class#Interface#0" expanded="false" />
+            <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+            <element signature="method#paintingMainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#rewindToContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#functionalForMainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+            <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#randomPicture#0;class#Interface#0" expanded="false" />
+            <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+            <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -948,30 +1076,34 @@
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/scene/Node.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/scene/control/Button.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/scene/Scene.java" />
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java" />
     <entry file="file://$PROJECT_DIR$/src/Interface.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#main#0;class#Interface#0" expanded="false" />
+            <element signature="method#start#0;class#Interface#0" expanded="false" />
+            <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+            <element signature="method#paintingMainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#rewindToContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#functionalForMainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+            <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#randomPicture#0;class#Interface#0" expanded="false" />
+            <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+            <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="5" column="32" lean-forward="false" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/stage/Stage.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/event/EventHandler.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/javafx-src.zip!/javafx/scene/Node.java" />
@@ -991,7 +1123,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
           <caret line="4" column="6" lean-forward="false" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#159#160#0" expanded="false" />
+            <element signature="e#214#215#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -999,7 +1135,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
           <caret line="14" column="47" lean-forward="false" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1011,9 +1149,10 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java" />
     <entry file="file://$PROJECT_DIR$/src/ORM.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
+        <state relative-caret-position="420">
           <caret line="120" column="106" lean-forward="false" selection-start-line="120" selection-start-column="106" selection-end-line="120" selection-end-column="106" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1031,19 +1170,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="10" column="3" lean-forward="true" selection-start-line="3" selection-start-column="2" selection-end-line="10" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Interface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="401" column="42" lean-forward="false" selection-start-line="401" selection-start-column="42" selection-end-line="401" selection-end-column="42" />
-          <folding />
+        <state relative-caret-position="532">
+          <caret line="49" column="14" lean-forward="true" selection-start-line="49" selection-start-column="14" selection-end-line="49" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#main#0;class#Interface#0" expanded="false" />
+            <element signature="method#start#0;class#Interface#0" expanded="false" />
+            <element signature="method#loginWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#entrance#0;class#Interface#0" expanded="false" />
+            <element signature="method#paintingMainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#rewindToContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#functionalForMainWindow#0;class#Interface#0" expanded="false" />
+            <element signature="method#addCircle#0;class#Interface#0" expanded="false" />
+            <element signature="method#addNewContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#randomPicture#0;class#Interface#0" expanded="false" />
+            <element signature="method#sendMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#addMessage#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseExited#0;class#Interface#0" expanded="false" />
+            <element signature="method#contactOnMouseEntered#0;class#Interface#0" expanded="false" />
+            <element signature="method#setCurrentContact#0;class#Interface#0" expanded="false" />
+            <element signature="method#removeExtraElement#0;class#Interface#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1053,7 +1202,7 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>messanger_client</last-edited>
+          <last-edited>messanger_client:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1106,7 +1255,6 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

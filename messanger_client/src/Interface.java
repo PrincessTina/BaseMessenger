@@ -41,7 +41,7 @@ public class Interface extends Application {
   public static void main(String[] args) {
     try {
       ORM.connection = DataBaseController.connection();
-      Interface.createInterface();
+      launch();
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
     }
@@ -54,32 +54,32 @@ public class Interface extends Application {
   private void loginWindow(Stage stage) throws Exception {
     key = false;
 
-    ImageView tick = new ImageView(new Image(new FileInputStream("..\\8240774.png")));
+    ImageView tick = new ImageView(new Image(new FileInputStream(".\\pictures\\8240774.png")));
     tick.setFitHeight(30);
     tick.setFitWidth(30);
     tick.setEffect(new Lighting());
 
-    ImageView cross = new ImageView(new Image(new FileInputStream("..\\Red X.png")));
+    ImageView cross = new ImageView(new Image(new FileInputStream(".\\pictures\\Red X.png")));
     cross.setFitHeight(30);
     cross.setFitWidth(30);
     cross.setEffect(new Lighting());
 
-    ImageView tick1 = new ImageView(new Image(new FileInputStream("..\\8240774.png")));
+    ImageView tick1 = new ImageView(new Image(new FileInputStream(".\\pictures\\8240774.png")));
     tick1.setFitHeight(30);
     tick1.setFitWidth(30);
     tick1.setEffect(new Lighting());
 
-    ImageView cross1 = new ImageView(new Image(new FileInputStream("..\\Red X.png")));
+    ImageView cross1 = new ImageView(new Image(new FileInputStream(".\\pictures\\Red X.png")));
     cross1.setFitHeight(30);
     cross1.setFitWidth(30);
     cross1.setEffect(new Lighting());
 
-    ImageView tick2 = new ImageView(new Image(new FileInputStream("..\\8240774.png")));
+    ImageView tick2 = new ImageView(new Image(new FileInputStream(".\\pictures\\8240774.png")));
     tick2.setFitHeight(30);
     tick2.setFitWidth(30);
     tick2.setEffect(new Lighting());
 
-    ImageView cross2 = new ImageView(new Image(new FileInputStream("..\\Red X.png")));
+    ImageView cross2 = new ImageView(new Image(new FileInputStream(".\\pictures\\Red X.png")));
     cross2.setFitHeight(30);
     cross2.setFitWidth(30);
     cross2.setEffect(new Lighting());
@@ -140,7 +140,7 @@ public class Interface extends Application {
     ObservableList<Node> list = vBox.getChildren();
     list.addAll(titleBox, loginBox, password1Box, button);
 
-    StackPane stackPane = new StackPane(new ImageView(new Image(new FileInputStream("..\\graphics-vegetables-788668.gif"))), vBox);
+    StackPane stackPane = new StackPane(new ImageView(new Image(new FileInputStream(".\\pictures\\graphics-vegetables-788668.gif"))), vBox);
     stackPane.getChildren().get(0).setVisible(false);
 
     Scene scene = new Scene(stackPane, 445, 340);
@@ -148,7 +148,7 @@ public class Interface extends Application {
     stage.setScene(scene);
     stage.setResizable(false);
     stage.setTitle("pinea");
-    stage.getIcons().add(new Image(new FileInputStream("..\\graphics-vegetables-788668.gif")));
+    stage.getIcons().add(new Image(new FileInputStream(".\\pictures\\graphics-vegetables-788668.gif")));
     stage.show();
 
     //Events
@@ -317,7 +317,7 @@ public class Interface extends Application {
       sendArea.setFocusTraversable(false);
       sendArea.setId("line");
 
-      ImageView send = new ImageView(new Image(new FileInputStream("..\\6.png")));
+      ImageView send = new ImageView(new Image(new FileInputStream(".\\pictures\\6.png")));
       send.setFitHeight(27);
       send.setFitWidth(27);
 
@@ -633,22 +633,22 @@ public class Interface extends Application {
 
     switch (random.nextInt(6)) {
       case 1:
-        url = "..\\circle1.png";
+        url = ".\\pictures\\circle1.png";
         break;
       case 2:
-        url = "..\\circle2.png";
+        url = ".\\pictures\\circle2.png";
         break;
       case 3:
-        url = "..\\balloon.png";
+        url = ".\\pictures\\balloon.png";
         break;
       case 4:
-        url = "..\\mill.png";
+        url = ".\\pictures\\mill.png";
         break;
       case 5:
-        url = "..\\squirrel.png";
+        url = ".\\pictures\\squirrel.png";
         break;
       default:
-        url = "..\\circle.png";
+        url = ".\\pictures\\circle.png";
     }
 
     return url;
@@ -790,10 +790,6 @@ public class Interface extends Application {
         list.remove(1);
       }
     }
-  }
-
-  static void createInterface() {
-    launch();
   }
 }
 
