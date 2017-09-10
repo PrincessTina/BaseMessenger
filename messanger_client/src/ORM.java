@@ -65,7 +65,7 @@ class ORM {
     request.append(Interface.userLogin);
     request.append("', '");
     request.append(currentContact);
-    request.append("'));");
+    request.append("')) order by id;");
 
     resultSet.populate(statement.executeQuery(request.toString()));
     while (resultSet.next()) {
@@ -108,7 +108,7 @@ class ORM {
     request.append(Interface.userLogin);
     request.append("') and id > ");
     request.append(id);
-    request.append(";");
+    request.append(" order by id;");
     resultSet.populate(statement.executeQuery(request.toString()));
 
     while (resultSet.next()) {

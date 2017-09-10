@@ -137,7 +137,8 @@ public class Interface extends Application {
     scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
     stage.setScene(scene);
     stage.setResizable(false);
-    stage.setTitle("Вход");
+    stage.setTitle("pinea");
+    stage.getIcons().add(new Image(new FileInputStream("..\\graphics-vegetables-788668.gif")));
     stage.show();
 
     //Events
