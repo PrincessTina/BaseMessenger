@@ -20,6 +20,7 @@ import javafx.scene.layout.*;
 import javafx.geometry.*;
 
 import java.io.FileInputStream;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -36,6 +37,15 @@ public class Interface extends Application {
   private int lastMessageId = 0;
   private int lineCount = 0;
   private int count = 0;
+
+  public static void main(String[] args) {
+    try {
+      ORM.connection = DataBaseController.connection();
+      Interface.createInterface();
+    } catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+    }
+  }
 
   public void start(Stage stage) throws Exception {
     loginWindow(stage);
@@ -134,7 +144,7 @@ public class Interface extends Application {
     stackPane.getChildren().get(0).setVisible(false);
 
     Scene scene = new Scene(stackPane, 445, 340);
-    scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
+    scene.getStylesheets().add(Interface.class.getResource("style.css").toExternalForm());
     stage.setScene(scene);
     stage.setResizable(false);
     stage.setTitle("pinea");
@@ -389,7 +399,7 @@ public class Interface extends Application {
       mainBox.setSpacing(5);
 
       Scene scene = new Scene(mainBox, 1180, 740);
-      scene.getStylesheets().add(Main.class.getResource("style2.css").toExternalForm());
+      scene.getStylesheets().add(Interface.class.getResource("style2.css").toExternalForm());
       stage.setScene(scene);
       stage.show();
 
