@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="messanger_client:jar" />
+      <artifact name="pinea:jar" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
@@ -30,8 +30,8 @@
       <file leaf-file-name="Interface.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Interface.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="49" column="14" lean-forward="true" selection-start-line="49" selection-start-column="14" selection-end-line="49" selection-end-column="14" />
+            <state relative-caret-position="451">
+              <caret line="522" column="3" lean-forward="true" selection-start-line="522" selection-start-column="3" selection-end-line="522" selection-end-column="3" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#main#0;class#Interface#0" expanded="false" />
@@ -252,7 +252,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/squirrel.png" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/artifacts/messenger" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
@@ -714,15 +714,15 @@
       <workItem from="1503162606092" duration="21357000" />
       <workItem from="1504801102718" duration="62399000" />
       <workItem from="1505045016390" duration="1088000" />
-      <workItem from="1505048955575" duration="2813000" />
+      <workItem from="1505048955575" duration="3276000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="383311000" />
+    <option name="totallyTimeSpent" value="383774000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2" y="1" width="1917" height="1030" extended-state="1" />
+    <frame x="2" y="1" width="1917" height="1030" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1172,8 +1172,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Interface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="49" column="14" lean-forward="true" selection-start-line="49" selection-start-column="14" selection-end-line="49" selection-end-column="14" />
+        <state relative-caret-position="451">
+          <caret line="522" column="3" lean-forward="true" selection-start-line="522" selection-start-column="3" selection-end-line="522" selection-end-column="3" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#main#0;class#Interface#0" expanded="false" />
@@ -1202,7 +1202,7 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>messanger_client:jar</last-edited>
+          <last-edited>pinea:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

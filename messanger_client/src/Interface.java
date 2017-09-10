@@ -148,7 +148,7 @@ public class Interface extends Application {
     stage.setScene(scene);
     stage.setResizable(false);
     stage.setTitle("pinea");
-    stage.getIcons().add(new Image(new FileInputStream(".\\pictures\\graphics-vegetables-788668.gif")));
+    stage.getIcons().add(new Image(new FileInputStream(".\\pictures\\pineapple.png")));
     stage.show();
 
     //Events

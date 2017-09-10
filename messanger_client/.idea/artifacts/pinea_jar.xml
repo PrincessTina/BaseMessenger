@@ -1,0 +1,15 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="pinea:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/messenger</output-path>
+    <root id="archive" name="pinea.jar">
+      <element id="module-output" name="messanger_client" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$KOTLIN_BUNDLED$/lib/kotlin-runtime.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$KOTLIN_BUNDLED$/lib/kotlin-reflect.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/postgresql/postgresql/9.0-801.jdbc4/postgresql-9.0-801.jdbc4.jar" path-in-jar="/" />
+      <element id="library" level="project" name="com.google.code.gson:gson:2.8.0" />
+      <element id="library" level="project" name="postgresql:postgresql:9.0-801.jdbc4" />
+      <element id="library" level="project" name="KotlinJavaRuntime" />
+    </root>
+  </artifact>
+</component>
