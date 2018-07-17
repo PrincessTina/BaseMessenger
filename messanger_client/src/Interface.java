@@ -25,6 +25,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 //ToDo: Попробовать переписать события для заголовков начального окна через css
+//ToDo: Шифрование логинов
+//ToDo: Возможность прикреплять документы и изображения
+//ToDo: Окошко о восстановлении соединения
 public class Interface extends Application {
   private boolean key;
   private boolean isButtonFront = false;
